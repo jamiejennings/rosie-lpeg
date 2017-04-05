@@ -18,8 +18,6 @@
 #include "lpprint.h"
 #include "lptree.h"
 
-#include "rbuf.h"
-
 /* number of siblings for each tree */
 const byte numsiblings[] = {
   0, 0, 0,	/* char, set, any */
@@ -1325,9 +1323,9 @@ static struct luaL_Reg pattreg[] = {
   /* Rosie-specific functions below */
   {"rcap", r_capture},
   {"rmatch", r_match},
-  {"newbuffer", r_lua_newbuffer},
-  {"getdata", r_lua_getdata},
-  {"add", r_lua_add},
+  /* {"newbuffer", r_lua_newbuffer}, */
+  /* {"getdata", r_lua_getdata}, */
+  /* {"add", r_lua_add}, */
   {"decode", r_lua_decode},
   {NULL, NULL}
 };

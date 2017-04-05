@@ -10,7 +10,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "lpcap.h"
-#include "rbuf.h"
+/* #include "rbuf.h" */
+#include "lauxlib.h"
 #include "rcap.h"
 
 static void print_capture(CapState *cs) {
@@ -31,7 +32,7 @@ static void print_capture_text(const char *s, const char *e) {
   printf("|\n");
 }
 
-int debug_Fullcapture(CapState *cs, rBuffer *buf, int count) {
+int debug_Fullcapture(CapState *cs, luaL_Buffer *buf, int count) {
   Capture *c = cs->cap;
   const char *start = c->s;
   const char *last = c->s + c->siz - 1;
@@ -42,14 +43,14 @@ int debug_Fullcapture(CapState *cs, rBuffer *buf, int count) {
   return ROSIE_OK;
 }
 
-int debug_Close(CapState *cs, rBuffer *buf, int count) {
+int debug_Close(CapState *cs, luaL_Buffer *buf, int count) {
   if (!cs->cap->kind==Cclose) return ROSIE_CLOSE_ERROR;
   printf("CLOSE:\n");
   print_capture(cs);
   return ROSIE_OK;
 }
 
-int debug_Open(CapState *cs, rBuffer *buf, int count) {
+int debug_Open(CapState *cs, luaL_Buffer *buf, int count) {
   if ((cs->cap->kind == Cclose) || (cs->cap->siz != 0)) return ROSIE_OPEN_ERROR;
   printf("OPEN:\n");
   print_capture(cs);
@@ -62,62 +63,62 @@ int debug_Open(CapState *cs, rBuffer *buf, int count) {
 #define r_inttostring(s, i) (snprintf((s), (MAXNUMBER2STR), (INT_FMT), (i)))
 #define isopencap(cap)	((captype(cap) != Cclose) && ((cap)->siz == 0))
 
-static void json_encode_pos(lua_State *L, size_t pos, rBuffer *buf) {
+static void json_encode_pos(lua_State *L, size_t pos, luaL_Buffer *buf) {
   char numbuff[MAXNUMBER2STR];
   size_t len;
   len = r_inttostring(numbuff, (int) pos);
-  r_addlstring(L, buf, numbuff, len);
+  luaL_addlstring(buf, numbuff, len);
 }
 
-static void json_encode_name(CapState *cs, rBuffer *buf) {
+static void json_encode_name(CapState *cs, luaL_Buffer *buf) {
   const char *name;
   size_t len;
   lua_rawgeti(cs->L, ktableidx(cs->ptop), cs->cap->idx);
   name = lua_tolstring(cs->L, -1, &len);
-  r_addlstring(cs->L, buf, name, len);
+  luaL_addlstring(buf, name, len);
   lua_pop(cs->L, 1);
 }
 
-int json_Fullcapture(CapState *cs, rBuffer *buf, int count) {
+int json_Fullcapture(CapState *cs, luaL_Buffer *buf, int count) {
   Capture *c = cs->cap;
   size_t s, e;
   if ((c->siz == 0) || (c->kind != Crosiecap)) return ROSIE_FULLCAP_ERROR;
-  if (count) r_addstring(cs->L, buf, ",");
+  if (count) luaL_addstring(buf, ",");
   s = c->s - cs->s + 1;		/* 1-based start position */
-  r_addstring(cs->L, buf, "{\"s\":");
+  luaL_addstring(buf, "{\"s\":");
   json_encode_pos(cs->L, s, buf);
-  r_addstring(cs->L, buf, ",\"type\":\"");
+  luaL_addstring(buf, ",\"type\":\"");
   json_encode_name(cs, buf);
   /* r_addstring(cs->L, buf, "\",\"subs\":[],\"e\":"); */
-  r_addstring(cs->L, buf, "\",\"e\":");
+  luaL_addstring(buf, "\",\"e\":");
   e = s + c->siz - 1;		/* length */
   json_encode_pos(cs->L, e, buf);
-  r_addstring(cs->L, buf, "}");
+  luaL_addstring(buf, "}");
   return ROSIE_OK;
 }
 
-int json_Close(CapState *cs, rBuffer *buf, int count) {
+int json_Close(CapState *cs, luaL_Buffer *buf, int count) {
   size_t e;
   if (!cs->cap->kind==Cclose) return ROSIE_CLOSE_ERROR;
   e = cs->cap->s - cs->s + 1;	/* 1-based end position */
-  if (!isopencap(cs->cap-1)) r_addstring(cs->L, buf, "]");
-  r_addstring(cs->L, buf, ",\"e\":");
+  if (!isopencap(cs->cap-1)) luaL_addstring(buf, "]");
+  luaL_addstring(buf, ",\"e\":");
   json_encode_pos(cs->L, e, buf);
-  r_addstring(cs->L, buf, "}");
+  luaL_addstring(buf, "}");
   return ROSIE_OK;
 }
 
-int json_Open(CapState *cs, rBuffer *buf, int count) {
+int json_Open(CapState *cs, luaL_Buffer *buf, int count) {
   size_t s;
   if (!isopencap(cs->cap) || cs->cap->kind != Crosiecap) return ROSIE_OPEN_ERROR;
-  if (count) r_addstring(cs->L, buf, ",");
+  if (count) luaL_addstring(buf, ",");
   s = cs->cap->s - cs->s + 1;	/* 1-based start position */
-  r_addstring(cs->L, buf, "{\"s\":");
+  luaL_addstring(buf, "{\"s\":");
   json_encode_pos(cs->L, s, buf);
-  r_addstring(cs->L, buf, ",\"type\":\"");
+  luaL_addstring(buf, ",\"type\":\"");
   json_encode_name(cs, buf);
-  if (isclosecap(cs->cap+1)) {r_addstring(cs->L, buf, "\"");}
-  else {r_addstring(cs->L, buf, "\",\"subs\":[");}
+  if (isclosecap(cs->cap+1)) {luaL_addstring(buf, "\"");}
+  else {luaL_addstring(buf, "\",\"subs\":[");}
   return ROSIE_OK;
 }
 
@@ -126,21 +127,21 @@ int json_Open(CapState *cs, rBuffer *buf, int count) {
    2^15, i.e. a signed short.  It is the responsibility of rmatch to
    ensure this. */
 
-static void encode_pos(lua_State *L, size_t pos, int negate, rBuffer *buf) {
+static void encode_pos(lua_State *L, size_t pos, int negate, luaL_Buffer *buf) {
   int intpos = (int) pos;
   if (negate) intpos = - intpos;
-  r_addlstring(L, buf, (const char *)&intpos, sizeof(int));
+  luaL_addlstring(buf, (const char *)&intpos, sizeof(int));
 }
 
-static void encode_string(lua_State *L, const char *str, size_t len, byte shortflag, rBuffer *buf) {
+static void encode_string(lua_State *L, const char *str, size_t len, byte shortflag, luaL_Buffer *buf) {
   int intlen = (int) len; 
   short shortlen = (short) len;
   int size = (shortflag ? sizeof(short) : sizeof(int));
-  r_addlstring(L, buf, (const char *) (shortflag ? &shortlen : &intlen), size); 
-  r_addlstring(L, buf, str, len); 
+  luaL_addlstring(buf, (const char *) (shortflag ? &shortlen : &intlen), size); 
+  luaL_addlstring(buf, str, len); 
 }
 
-static void encode_name(CapState *cs, rBuffer *buf) {
+static void encode_name(CapState *cs, luaL_Buffer *buf) {
   const char *name;
   size_t len;
   lua_rawgeti(cs->L, ktableidx(cs->ptop), cs->cap->idx); 
@@ -149,7 +150,7 @@ static void encode_name(CapState *cs, rBuffer *buf) {
   lua_pop(cs->L, 1); 
 }
 
-int byte_Fullcapture(CapState *cs, rBuffer *buf, int count) {
+int byte_Fullcapture(CapState *cs, luaL_Buffer *buf, int count) {
   Capture *c = cs->cap;
   size_t s, e;
   if (!isfullcap(c) || (c->kind != Crosiecap)) return ROSIE_FULLCAP_ERROR;
@@ -161,7 +162,7 @@ int byte_Fullcapture(CapState *cs, rBuffer *buf, int count) {
   return ROSIE_OK;
 }
 
-int byte_Close(CapState *cs, rBuffer *buf, int count) {
+int byte_Close(CapState *cs, luaL_Buffer *buf, int count) {
   size_t e;
   if (!isclosecap(cs->cap)) return ROSIE_CLOSE_ERROR;
   e = cs->cap->s - cs->s + 1;	/* 1-based end position */
@@ -169,7 +170,7 @@ int byte_Close(CapState *cs, rBuffer *buf, int count) {
   return ROSIE_OK;
 }
 
-int byte_Open(CapState *cs, rBuffer *buf, int count) {
+int byte_Open(CapState *cs, luaL_Buffer *buf, int count) {
   size_t s;
   if ((cs->cap->kind != Crosiecap) || (cs->cap->siz != 0)) return ROSIE_OPEN_ERROR;
   s = cs->cap->s - cs->s + 1;	/* 1-based start position */

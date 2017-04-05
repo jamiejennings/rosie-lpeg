@@ -3,10 +3,10 @@ LUADIR = ../lua/
 
 ifdef LPEG_DEBUG
 COPT = -DLPEG_DEBUG -g
-FILES = rcap.o rbuf.o lpvm.o lpcap.o lptree.o lpcode.o lpprint.o
+FILES = rcap.o lpvm.o lpcap.o lptree.o lpcode.o lpprint.o
 else
 COPT = -O2
-FILES = rcap.o rbuf.o lpvm.o lpcap.o lptree.o lpcode.o
+FILES = rcap.o lpvm.o lpcap.o lptree.o lpcode.o
 endif
 
 ifdef ROSIE_DEBUG
@@ -62,5 +62,6 @@ lpcode.o: lpcode.c lptypes.h lpcode.h lptree.h lpvm.h lpcap.h
 lpprint.o: lpprint.c lptypes.h lpprint.h lptree.h lpvm.h lpcap.h
 lptree.o: lptree.c lptypes.h lpcap.h lpcode.h lptree.h lpvm.h lpprint.h
 lpvm.o: lpvm.c lpcap.h lptypes.h lpvm.h lpprint.h lptree.h
-rbuf.o: rbuf.c rbuf.h
+rcap.o: rcap.h rcap.c
+#rbuf.o: rbuf.c rbuf.h
 

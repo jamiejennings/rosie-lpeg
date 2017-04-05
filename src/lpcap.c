@@ -10,7 +10,7 @@
 #include "lptypes.h"
 #include <string.h>
 
-#include "rbuf.h"
+/* #include "rbuf.h" */
 #include "rcap.h"
 
 #define closeaddr(c)	((c)->s + (c)->siz - 1)
@@ -533,8 +533,8 @@ int getcaptures (lua_State *L, const char *s, const char *r, int ptop) {
 }
 
 /* Rosie extensions */
-void r_pushmatch(lua_State *L, rBuffer *buf, const char **s, const char **e);
-void r_pushmatch(lua_State *L, rBuffer *buf, const char **s, const char **e) {
+void r_pushmatch(lua_State *L, const char **s, const char **e);
+void r_pushmatch(lua_State *L, const char **s, const char **e) {
   int top;
   const short *shortp;
   int n = 0;
@@ -561,7 +561,7 @@ void r_pushmatch(lua_State *L, rBuffer *buf, const char **s, const char **e) {
   /* process subs, if any */
   top = lua_gettop(L);
   while (*(const int *)*s < 0) {
-    r_pushmatch(L, buf, s, e);
+    r_pushmatch(L, s, e);
     n++;
   } 
   
@@ -585,10 +585,10 @@ void r_pushmatch(lua_State *L, rBuffer *buf, const char **s, const char **e) {
 }
   
 int r_lua_decode (lua_State *L) {
-  rBuffer *buf = (rBuffer *)luaL_checkudata(L, 1, ROSIE_BUFFER);
-  const char *s = buf->data;	/* start of data */
-  const char *e = buf->data + buf->n; /* end of data */
-  r_pushmatch(L, buf, &s, &e);
+  size_t len;
+  const char *s = luaL_checklstring(L, 1, &len);
+  const char *e = s + len;	/* end of data */
+  r_pushmatch(L, &s, &e);
   return 1;
 }
 
@@ -599,7 +599,7 @@ encoder_functions json_encoder = { json_Open, json_Fullcapture, json_Close };
 /* N.B. caploop does NOT have to be recursive.  It can be a flat loop
    if we keep our own "stack" of inner count values, which is needed
    so the json encoder can insert commas into lists of more than one item. */
-static int caploop(CapState *cs, encoder_functions *encode, rBuffer *buf, int count) {
+static int caploop(CapState *cs, encoder_functions *encode, luaL_Buffer *buf, int count) {
   int err;
   int inner_count = 0;
   err = encode->Open(cs, buf, count); if (err) return err;
@@ -632,7 +632,8 @@ int r_getcaptures(lua_State *L, const char *s, const char *r, int ptop, int etyp
   int err;
   encoder_functions encode;
   Capture *capture = (Capture *)lua_touserdata(L, caplistidx(ptop));
-  rBuffer *buf = r_newbuffer(L);
+  luaL_Buffer buf;
+  luaL_buffinit(L, &buf);
   switch (etype) {
   case -1: { encode = debug_encoder; break; }
   case 0: { encode = byte_encoder; break; }
@@ -647,15 +648,16 @@ int r_getcaptures(lua_State *L, const char *s, const char *r, int ptop, int etyp
     cs.ocap = cs.cap = capture; cs.L = L;
     cs.s = s; cs.valuecached = 0; cs.ptop = ptop;
     if (isfullcap(capture)) {
-      err = encode.Fullcapture(&cs, buf, 0);
+      err = encode.Fullcapture(&cs, &buf, 0);
       if (!err && (!isclosecap(++cs.cap))) err = ROSIE_OPEN_ERROR;
     }
-    else err = caploop(&cs, &encode, buf, 0);
+    else err = caploop(&cs, &encode, &buf, 0);
     if (err) {
       if ((err < 0) || (err > n_messages)) luaL_error(L, "in rosie match, unspecified error");
       else luaL_error(L, r_status_messages[err]);
     }
   }
+  luaL_pushresult(&buf);
   lua_pushinteger(L, r - s + 1); /* last position */
   return 2;			 /* an rBuffer is on the stack */
 }

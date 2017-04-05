@@ -6,6 +6,8 @@ termcolor = load_module("termcolor", "submodules/lua-modules")
 test = load_module("test", "submodules/lua-modules")
 heading, subheading, check = test.heading, test.subheading, test.check
 
+function getdata(s) return s; end
+
 test.start()
 
 foo = lpeg.rcap((lpeg.R("09")^0), "foo")
@@ -38,21 +40,20 @@ check(type(s)=="nil")
 check(type(msg)=="string")
 if type(msg)=="string" then check(msg:find("invalid encoding")); end
 
-subheading("Create some large buffers that need extra action for gc")
+-- subheading("Create some large buffers that need extra action for gc")
 
--- error will occur if the gc causes a segfault... need to investigate with valgrind on linux.
-for i=1,1 do
-   s, nextpos = bar:rmatch("kX7 3 2X1 8abcdef")
-   check(type(s)=="userdata")
-   check(#s>0)
-   for j = 1,100 do
-      lpeg.add(s, string.rep("x", 1000))
-   end
-   print("length of buffer: " .. tostring(#s))
-   s = nil
-   collectgarbage("collect")
-   collectgarbage("collect")
-end
+-- for i=1,1 do
+--    s, nextpos = bar:rmatch("kX7 3 2X1 8abcdef")
+--    check(type(s)=="string")
+--    check(#s>0)
+--    for j = 1,100 do
+--       lpeg.add(s, string.rep("x", 1000))
+--    end
+--    print("length of buffer: " .. tostring(#s))
+--    s = nil
+--    collectgarbage("collect")
+--    collectgarbage("collect")
+-- end
  
 
 
@@ -61,15 +62,15 @@ heading("JSON")
 subheading("Captures using indices")
 
 s = bar:rmatch("kX7 3 2X1 8abcdef", 1, 1, 0, 0)	    -- "json"
-check(type(s)=="userdata")
-t = json.decode(lpeg.getdata(s))
+check(type(s)=="string")
+t = json.decode(getdata(s))
 check_table(t, "bar", 2, 15, 2)
 check(#t.subs==2)
 for i,v in ipairs(t.subs) do check_table(v, "many foos"); end
 
 s = bar:rmatch("kX7 X1 8 X9 X101 102 103 104abcdef", 1, 1, 0, 0) -- "json"
-check(type(s)=="userdata")
-t = json.decode(lpeg.getdata(s))
+check(type(s)=="string")
+t = json.decode(getdata(s))
 check_table(t, "bar", 2, 32, 4)
 check(t.s==2)
 check(t.e==32)
@@ -84,8 +85,8 @@ for i,v in ipairs(t.subs) do
 end
 
 s = bar:rmatch("kX X Xabcdef", 1, 1, 0, 0) -- "json"
-check(type(s)=="userdata")
-t = json.decode(lpeg.getdata(s))
+check(type(s)=="string")
+t = json.decode(getdata(s))
 check_table(t)
 check(t.s==2)
 check(t.e==10)
@@ -107,8 +108,8 @@ foos = (foo * (lpeg.P" " * foo)^0)		    -- no rcap
 bar = lpeg.P(1) * lpeg.rcap(((lpeg.P"X" * foos)^1) * lpeg.P"abc", "bar")
 
 s = bar:rmatch("kX7 3 2X1 8abcdef", 1, 1, 0, 0) -- "json"
-check(type(s)=="userdata")
-t = json.decode(lpeg.getdata(s))
+check(type(s)=="string")
+t = json.decode(getdata(s))
 check_table(t, "bar")
 check(t.s==2)
 check(t.e==15)
@@ -120,8 +121,8 @@ end
 
 
 s = bar:rmatch("kX7 X1 8 X9 X101 102 103 104abcdef", 1, 1, 0, 0)
-check(type(s)=="userdata")
-t = json.decode(lpeg.getdata(s))
+check(type(s)=="string")
+t = json.decode(getdata(s))
 check_table(t)
 check(t.s==2)
 check(t.e==32)
@@ -132,8 +133,8 @@ for i,v in ipairs(t.subs) do
 end
 
 s, err = bar:rmatch("kXabcdef", 1, 1, 0, 0)
-check(type(s)=="userdata")
-t = json.decode(lpeg.getdata(s))
+check(type(s)=="string")
+t = json.decode(getdata(s))
 check_table(t)
 check(t.s==2)
 check(t.e==6)
@@ -150,17 +151,17 @@ bar = lpeg.P(1) * lpeg.rcap(((lpeg.P"X" * foos)^1) * lpeg.P"abc", "bar")
 subheading("Captures using indices")
 
 s = bar:rmatch("kX7 3 2X1 8abcdef", 1, 0, 0, 0)	    
-check(type(s)=="userdata")
+check(type(s)=="string")
 check(#s==116)
 check_table(lpeg.decode(s), "bar", 2, 15, 2)
 
 s = bar:rmatch("kX7 X1 8 X9 X101 102 103 104abcdef", 1, 0, 0, 0) 
-check(type(s)=="userdata")
+check(type(s)=="string")
 check(#s==232)
 check_table(lpeg.decode(s), "bar", 2, 32, 4)
 
 s = bar:rmatch("kX X Xabcdef", 1, 0, 0, 0) 
-check(type(s)=="userdata")
+check(type(s)=="string")
 check(#s==135)
 check_table(lpeg.decode(s), "bar", 2, 10, 3)
 for i,v in ipairs(t.subs) do
@@ -175,7 +176,7 @@ foos = (foo * (lpeg.P" " * foo)^0)		    -- NO NAME, NO CALL TO r_capindices
 bar = lpeg.P(1) * lpeg.rcap(((lpeg.P"X" * foos)^1) * lpeg.P"abc", "bar")
 
 s = bar:rmatch("kX7 3 2X1 8abcdef", 1, 0, 0, 0) 
-check(type(s)=="userdata")
+check(type(s)=="string")
 check(#s==78)
 check_table(lpeg.decode(s), "bar", 2, 15, 5)
 for i,v in ipairs(t.subs) do
@@ -183,7 +184,7 @@ for i,v in ipairs(t.subs) do
 end
 
 s = bar:rmatch("kX7 X1 8 X9 X101 102 103 104abcdef", 1, 0, 0, 0)
-check(type(s)=="userdata")
+check(type(s)=="string")
 check(#s==156)
 check_table(lpeg.decode(s), "bar", 2, 32, 11)
 for i,v in ipairs(t.subs) do
@@ -191,7 +192,7 @@ for i,v in ipairs(t.subs) do
 end
 
 s, err = bar:rmatch("kXabcdef", 1, 0, 0, 0)
-check(type(s)=="userdata")
+check(type(s)=="string")
 check(#s==26)
 check_table(lpeg.decode(s), "bar", 2, 6, 1)
 check(t.subs[1].s==t.subs[1].e)
@@ -207,7 +208,7 @@ check(t.e==301)
 check(t.s==1)
 
 s, l = bar:rmatch(txt, 1, 1)
-ok, t = pcall(json.decode, lpeg.getdata(s))
+ok, t = pcall(json.decode, getdata(s))
 check_table(t, "BAR", 1, 301)
 
 
@@ -231,7 +232,7 @@ foo = lpeg.rcap((lpeg.R("09")^0), "foo")
 foos = lpeg.rcap((foo * (lpeg.P" " * foo)^0), "many foos")
 ok, s, last = pcall(foos.rmatch, foos, "123 4 567890")
 check(ok)
-check(type(s)=="userdata")
+check(type(s)=="string")
 check(type(last)=="number")
 
 function check_error(pat, input, msg)
@@ -275,7 +276,7 @@ equalcount = lpeg.rcap(
    "S")
 
 s, n = equalcount:rmatch(bal)
-check(type(s)=="userdata")
+check(type(s)=="string")
 t = lpeg.decode(s)
 check_table(t, "S", 1, 5)
 
@@ -289,7 +290,7 @@ equalcount =
 
 
 s, n = equalcount:rmatch(bal)
-check(type(s)=="userdata")
+check(type(s)=="string")
 t = lpeg.decode(s)
 check_table(t, "S", 1, 5, 1)
 check_table(t.subs[1], "B", 2, 5, 2)

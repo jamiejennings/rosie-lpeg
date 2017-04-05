@@ -43,12 +43,13 @@ int finddyncap (Capture *cap, Capture *last);
 
 /* Rosie additions */
 
-#include "rbuf.h"
+/* #include "rbuf.h" */
+#include "lauxlib.h"
 
 typedef struct {  
-  int (*Open)(CapState *cs, rBuffer *buf, int count);
-  int (*Fullcapture)(CapState *cs, rBuffer *buf, int count);
-  int (*Close)(CapState *cs, rBuffer *buf, int count);
+  int (*Open)(CapState *cs, luaL_Buffer *buf, int count);
+  int (*Fullcapture)(CapState *cs, luaL_Buffer *buf, int count);
+  int (*Close)(CapState *cs, luaL_Buffer *buf, int count);
 } encoder_functions;
  
 typedef enum r_status { 
