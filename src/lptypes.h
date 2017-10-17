@@ -51,7 +51,7 @@
 
 /* default maximum size for call/backtrack stack */
 #if !defined(MAXBACK)
-#define MAXBACK         400
+#define MAXBACK         1000	/* Rosie */
 #endif
 
 
