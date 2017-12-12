@@ -31,7 +31,7 @@ typedef struct r_encoder_type {
 #define ENCODE_BYTE 3
 
 __attribute__((unused))
-static r_encoder_t r_encoders[] = { 
+static const r_encoder_t r_encoders[] = { 
      {"json",   ENCODE_JSON},
      {"line",   ENCODE_LINE},
      {"byte",   ENCODE_BYTE},
