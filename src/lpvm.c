@@ -200,25 +200,23 @@ const char *match (lua_State *L, const char *o, const char *s, const char *e,
         continue;
       }
       case IChar: {
-        if ((byte)*s == p->i.aux && s < e) { p++; s++; }
+	if (s < e && ((byte)*s == p->i.aux)) { p++; s++; }
         else goto fail;
         continue;
       }
       case ITestChar: {
-        if ((byte)*s == p->i.aux && s < e) p += 2;
+        if (s < e && ((byte)*s == p->i.aux)) p += 2;
         else p += getoffset(p);
         continue;
       }
       case ISet: {
-        int c = (byte)*s;
-        if (testchar((p+1)->buff, c) && s < e)
+        if (s < e && testchar((p+1)->buff, (int)((byte)*s)))
           { p += CHARSETINSTSIZE; s++; }
         else goto fail;
         continue;
       }
       case ITestSet: {
-        int c = (byte)*s;
-        if (testchar((p + 2)->buff, c) && s < e)
+        if (s < e && testchar((p + 2)->buff, (int)((byte)*s)))
           p += 1 + CHARSETINSTSIZE;
         else p += getoffset(p);
         continue;
@@ -231,8 +229,7 @@ const char *match (lua_State *L, const char *o, const char *s, const char *e,
       }
       case ISpan: {
         for (; s < e; s++) {
-          int c = (byte)*s;
-          if (!testchar((p+1)->buff, c)) break;
+          if (!testchar((p+1)->buff, (int)((byte)*s))) break;
         }
         p += CHARSETINSTSIZE;
         continue;
