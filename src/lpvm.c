@@ -353,7 +353,10 @@ const char *match (lua_State *L, const char *o, const char *s, const char *e,
         continue;
       }
       case IHalt: {				    /* rosie */
-	/* FUTURE: Maybe unwind the stack, if there is any info there that we could use? */
+	/* We could unwind the stack, committing everything so that we
+	   can return everything captured so far.  Instead, we
+	   simulate the effect of this in caploop() in lpcap.c.
+	 */
         capture[captop].kind = Cfinal;
         capture[captop].s = s;
         return s;

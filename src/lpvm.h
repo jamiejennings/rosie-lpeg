@@ -41,12 +41,12 @@ typedef enum Opcode {
 
 typedef union Instruction {
   struct Inst {
-    byte code;
+    byte code;			/* opcode */
     short aux;			/* Rosie (was byte) */
-    short key;
+    short key;			/* index into capture table (ktable) */
   } i;
-  int offset;
-  byte buff[1];
+  int offset;			/* follows an opcode that needs one */
+  byte buff[1];			/* char set following an opcode that needs one */
 } Instruction;
 
 

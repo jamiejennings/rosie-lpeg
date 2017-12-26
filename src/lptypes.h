@@ -49,13 +49,18 @@
 #endif
 
 
-/* default maximum size for call/backtrack stack */
+/* default maximum size for call/backtrack stack,
+ * which is STACK ALLOCATED in match() in lpvm.c per the INITBACK
+ * definition
+ */
 #if !defined(MAXBACK)
 #define MAXBACK         9000  /* (at most can be USHRT_MAX) Rosie */
 #endif
 
 
-/* maximum number of rules in a grammar */
+/* maximum number of rules in a grammar 
+ * STACK ALLOCATED array of ints of this size in codegrammar() in lpcode.c
+ */
 #if !defined(MAXRULES)
 #define MAXRULES        1000
 #endif
@@ -66,7 +71,11 @@
 typedef int32_t capidx_t; 
 
 
-/* initial size for capture's list */
+/* initial size for capture's list 
+ * 
+ * FUTURE: Tune this value to accomodate most use cases (32 may be
+ * good -- need to track actual usage to know).
+ */
 #define INITCAPSIZE	32
 
 
