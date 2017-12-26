@@ -49,6 +49,13 @@ capidx_t finddyncap (Capture *cap, Capture *last);
 
 #include "rbuf.h"
 
+/* Two arrays are STATICALLY ALLOCATED with R_MAXDEPTH elements
+ * in lpcap.c, where it is used by caploop().
+ *
+ * FUTURE: Allocate a small number of entries that will accomodate
+ * many use cases, perhaps 30 or so.  Dynamically allocate more when
+ * needed, up to R_MAXDEPTH at most.
+ */
 #define R_MAXDEPTH USHRT_MAX	/* max nesting depth for patterns (was 200) */
 
 typedef struct {  
@@ -58,7 +65,7 @@ typedef struct {
 } encoder_functions;
  
 typedef enum r_status { 
-     /* OK must be first so that its value is 0 */ 
+     /* OK must have the value 0 */ 
      ROSIE_HALT = -1, ROSIE_OK, ROSIE_OPEN_ERROR, ROSIE_CLOSE_ERROR, ROSIE_FULLCAP_ERROR
 } r_status;
 

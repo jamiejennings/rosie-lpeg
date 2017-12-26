@@ -693,31 +693,60 @@ encoder_functions debug_encoder = { debug_Open, debug_Fullcapture, debug_Close }
 encoder_functions byte_encoder = { byte_Open, byte_Fullcapture, byte_Close };
 encoder_functions json_encoder = { json_Open, json_Fullcapture, json_Close };
 
-#define push(start, count) \
-  { top++; \
-    if (top>=R_MAXDEPTH) luaL_error(L, "max pattern nesting depth exceeded"); \
-    starts[top]=(start); counts[top]=(count); \
+struct stack_t {
+  int limit;
+  int top;
+#ifdef LPEG_DEBUG
+  /* track the amount of the stack actually used, for use in future optimization */
+  int maxtop;
+#endif
+  const char *starts[R_MAXDEPTH+1];
+  int counts[R_MAXDEPTH+1];
+} stack;
+
+static void push(struct stack_t *s, const char *start, int count, lua_State *L) {
+  s->top++;
+#ifdef LPEG_DEBUG
+  if (s->top > s->maxtop) s->maxtop = s->top;
+#endif
+  if (s->top >= s->limit) luaL_error(L, "max pattern nesting depth exceeded");
+  s->starts[s->top]=start;
+  s->counts[s->top]=count;
 }
 
-#define pop \
-  { top--; \
-    if (top<0) luaL_error(L, "internal error re nesting depth"); }
+static void pop(struct stack_t *s) {
+  s->top--;
+  assert(s->top >= 0);
+}
+
+static void init_stack(struct stack_t *s) {
+  s->limit = R_MAXDEPTH;
+  s->top = 0;
+#ifdef LPEG_DEBUG
+  s->maxtop = 0;
+#endif
+}
+
+#define LOGf(fmt, ...) \
+     do { fprintf(stderr, "%s:%d:%s(): " fmt, __FILE__, \
+			       __LINE__, __func__, __VA_ARGS__);     \
+	  fflush(NULL);						     \
+     } while (0)
+
 
 static int caploop(CapState *cs, encoder_functions *encode, rBuffer *buf) {
   int err;
   lua_State *L = cs->L;
   const char *start;
-  const char *starts[R_MAXDEPTH+1];
-  int counts[R_MAXDEPTH+1];
-  int top = 0;
   int count = 0;
-  push(cs->cap->s, 0);
+  init_stack(&stack);
+  push(&stack, cs->cap->s, 0, L);
   err = encode->Open(cs, buf, 0); if (err) return err;
   cs->cap++;
-  while (top > 0) {
+  while (stack.top > 0) {
     while (!isclosecap(cs->cap) && !isfinalcap(cs->cap)) {
       if (cs->cap->siz == 0) {
-	push(cs->cap->s, count);
+	push(&stack, cs->cap->s, count, L);
 	err = encode->Open(cs, buf, count); if (err) return err;
 	count = 0;
       }
@@ -727,16 +756,16 @@ static int caploop(CapState *cs, encoder_functions *encode, rBuffer *buf) {
       }
       cs->cap++;
     }
-    count = counts[top];
-    start = starts[top];
-    pop;
-    /* Currently we ASSUME that every Open will be followed by a
-     * Close.  When we introduce a non-local exit (throw) out of the
-     * vm, we must relax this.  We will need a sentinel, a special
-     * Close different from the one inserted by IEnd.  Here (below),
-     * we will look to see if the Close is that special sentinel.  If
-     * so, then for every still-open capture, we will synthesize a
-     * Close that didn't exist due to the non-local exit from the vm.
+    count = stack.counts[stack.top];
+    start = stack.starts[stack.top];
+    pop(&stack);
+    /* We cannot assume that every Open will be followed by a Close,
+     * due to the introduction of a non-local exit (throw) out of the
+     * lpeg vm.  We use a sentinel, a special Close different from the
+     * one inserted by IEnd.  Here (below), we will look to see if the
+     * Close is that special sentinel.  If so, then for every
+     * still-open capture, we will synthesize a Close that was never
+     * created because a non-local exit occurred.
      */
     if (isfinalcap(cs->cap)) {
       Capture synthetic;
@@ -747,17 +776,24 @@ static int caploop(CapState *cs, encoder_functions *encode, rBuffer *buf) {
       cs->cap = &synthetic;
       while (1) {
 	err = encode->Close(cs, buf, count, start); if (err) return err;
-	if (top==0) break;
-	pop;
-	count = counts[top];
-	start = starts[top];
+	if (stack.top==0) break;
+	pop(&stack);
+	count = stack.counts[stack.top];
+	start = stack.starts[stack.top];
       }
+
+#ifdef LPEG_DEBUG
+      LOGf("nesting depth = %d\n", stack.maxtop);
+#endif
       return ROSIE_HALT;
     }
     err = encode->Close(cs, buf, count, start); if (err) return err;
     cs->cap++;
     count++;
   }
+#ifdef LPEG_DEBUG
+      LOGf("nesting depth = %d\n", stack.maxtop);
+#endif
   return ROSIE_OK;
 }
 
