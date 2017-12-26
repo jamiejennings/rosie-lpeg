@@ -1,6 +1,8 @@
 LIBNAME = lpeg
 LUADIR = ../lua/
 
+LPEG_DEBUG=1
+
 ifdef LPEG_DEBUG
 COPT = -DLPEG_DEBUG -g
 FILES = rcap.o rbuf.o lpvm.o lpcap.o lptree.o lpcode.o lpprint.o
