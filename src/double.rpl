@@ -1,0 +1,22 @@
+boundary = ~    -- not used; defined so we can see compilation results for ~
+t0 = "x"
+t1 = t0 t0
+t2 = t1 t1
+t3 = t2 t2
+t4 = t3 t3
+t5 = t4 t4
+t6 = t5 t5
+t7 = t6 t6
+t8 = t7 t7
+t9 = t8 t8
+t10 = t9 t9
+t11 = t10 t10
+t12 = t11 t11
+t13 = t12 t12
+t14 = t13 t13
+t15 = t14 t14
+t16 = t15 t15
+t17 = t16 t16
+t18 = t17 t17
+t19 = t18 t18
+
