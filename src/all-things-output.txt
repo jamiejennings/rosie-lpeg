@@ -1,0 +1,1578 @@
+[~/Projects/rosie-lpeg/src]$ cat input 
+Dec 23 00:46:43 Jamies-Compabler newsyslog[36337]: logfile turned over
+[~/Projects/rosie-lpeg/src]$ /usr/bin/time -p ../../rosie-pattern-language/bin/rosie -o json match all.things input
+Loading rosie from source
+lpcap.c:795:caploop(): nesting depth = 1
+lpcap.c:795:caploop(): nesting depth = 4
+lpcap.c:795:caploop(): nesting depth = 1
+lpcap.c:795:caploop(): nesting depth = 8
+lpcap.c:795:caploop(): nesting depth = 7
+lpcap.c:795:caploop(): nesting depth = 4
+lpcap.c:795:caploop(): nesting depth = 4
+lpcap.c:795:caploop(): nesting depth = 1
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 2
+lpcap.c:795:caploop(): nesting depth = 7
+lpcap.c:795:caploop(): nesting depth = 1
+lpcap.c:795:caploop(): nesting depth = 6
+lpcap.c:795:caploop(): nesting depth = 1
+lpcap.c:795:caploop(): nesting depth = 8
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 9
+lpcap.c:795:caploop(): nesting depth = 4
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 1
+lpcap.c:795:caploop(): nesting depth = 5
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 4
+lpcap.c:795:caploop(): nesting depth = 4
+lpcap.c:795:caploop(): nesting depth = 4
+lpcap.c:795:caploop(): nesting depth = 1
+lpcap.c:795:caploop(): nesting depth = 8
+lpcap.c:795:caploop(): nesting depth = 7
+lpcap.c:795:caploop(): nesting depth = 7
+lpcap.c:795:caploop(): nesting depth = 5
+lpcap.c:795:caploop(): nesting depth = 4
+lpcap.c:795:caploop(): nesting depth = 7
+lpcap.c:795:caploop(): nesting depth = 4
+lpcap.c:795:caploop(): nesting depth = 4
+lpcap.c:795:caploop(): nesting depth = 12
+lpcap.c:795:caploop(): nesting depth = 5
+lpcap.c:795:caploop(): nesting depth = 4
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 14
+lpcap.c:795:caploop(): nesting depth = 9
+lpcap.c:795:caploop(): nesting depth = 4
+lpcap.c:795:caploop(): nesting depth = 1
+lpcap.c:795:caploop(): nesting depth = 4
+lpcap.c:795:caploop(): nesting depth = 7
+lpcap.c:795:caploop(): nesting depth = 8
+lpcap.c:795:caploop(): nesting depth = 9
+lpcap.c:795:caploop(): nesting depth = 9
+lpcap.c:795:caploop(): nesting depth = 7
+lpcap.c:795:caploop(): nesting depth = 11
+lpcap.c:795:caploop(): nesting depth = 4
+lpcap.c:795:caploop(): nesting depth = 2
+*** compiling 	{[[ \t\r]]}+
+*** time = 	0.04	ms
+*** heapsize = 	939	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	"\n"
+*** time = 	0.03	ms
+*** heapsize = 	939	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	{"--" {!newline .}* {newline / $}}
+*** time = 	0.18	ms
+*** heapsize = 	951	Kb
+*** #inst = 	150
+*** treesize = 	1.9	Kb
+
+*** compiling 	{{{ws}? {comment / newline}}* ~ {ws}?}
+*** time = 	0.08	ms
+*** heapsize = 	966	Kb
+*** #inst = 	297
+*** treesize = 	3.0	Kb
+
+*** compiling 	{[:alnum:] / [[_]]}
+*** time = 	0.03	ms
+*** heapsize = 	961	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{[:alpha:] {id_char}*}
+*** time = 	0.03	ms
+*** heapsize = 	963	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	"."
+*** time = 	0.01	ms
+*** heapsize = 	963	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	[[$~^]]
+*** time = 	0.02	ms
+*** heapsize = 	964	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{dot / unoverloaded_id_symbol}
+*** time = 	0.02	ms
+*** heapsize = 	965	Kb
+*** #inst = 	12
+*** treesize = 	0.5	Kb
+
+*** compiling 	{{!"\n" .}+ {"\n" / $}}
+*** time = 	0.06	ms
+*** heapsize = 	978	Kb
+*** #inst = 	273
+*** treesize = 	3.1	Kb
+
+*** compiling 	rest_of_line
+*** time = 	0.06	ms
+*** heapsize = 	978	Kb
+*** #inst = 	275
+*** treesize = 	3.1	Kb
+
+*** compiling 	{unoverloaded_id_symbol / {dot !id} / {id !dot}}
+*** time = 	0.13	ms
+*** heapsize = 	986	Kb
+*** #inst = 	36
+*** treesize = 	0.9	Kb
+
+*** compiling 	id
+*** time = 	0.02	ms
+*** heapsize = 	986	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	{{packagename [[.]]}? localname}
+*** time = 	0.11	ms
+*** heapsize = 	991	Kb
+*** #inst = 	57
+*** treesize = 	1.1	Kb
+
+*** compiling 	[[\"]]
+*** time = 	0.04	ms
+*** heapsize = 	992	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	[[\\]]
+*** time = 	0.04	ms
+*** heapsize = 	993	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	{{!{esc / dquote} .} / {esc .}}*
+*** time = 	0.09	ms
+*** heapsize = 	1010	Kb
+*** #inst = 	277
+*** treesize = 	3.0	Kb
+
+*** compiling 	{dquote literal dquote}
+*** time = 	0.04	ms
+*** heapsize = 	1014	Kb
+*** #inst = 	279
+*** treesize = 	3.1	Kb
+
+*** compiling 	[[#]]
+*** time = 	0.02	ms
+*** heapsize = 	1012	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	localname
+*** time = 	0.03	ms
+*** heapsize = 	1012	Kb
+*** #inst = 	38
+*** treesize = 	0.9	Kb
+
+*** compiling 	{hash_mark {tag / quoted_string}}
+*** time = 	0.07	ms
+*** heapsize = 	1021	Kb
+*** #inst = 	325
+*** treesize = 	3.5	Kb
+
+*** compiling 	[[*]]
+*** time = 	0.04	ms
+*** heapsize = 	1025	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	[[?]]
+*** time = 	0.04	ms
+*** heapsize = 	1026	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	[[+]]
+*** time = 	0.04	ms
+*** heapsize = 	1027	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	{"end" !id_char}
+*** time = 	0.03	ms
+*** heapsize = 	1029	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	{"local" / "alias" / "grammar" / "end"}
+*** time = 	0.04	ms
+*** heapsize = 	1033	Kb
+*** #inst = 	33
+*** treesize = 	0.9	Kb
+
+*** compiling 	{keyword_list !id_char}
+*** time = 	0.03	ms
+*** heapsize = 	1034	Kb
+*** #inst = 	40
+*** treesize = 	1.0	Kb
+
+*** compiling 	"^"
+*** time = 	0.03	ms
+*** heapsize = 	1035	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	{{!esc !"[" !"]" .} / {esc .}}
+*** time = 	0.14	ms
+*** heapsize = 	1045	Kb
+*** #inst = 	269
+*** treesize = 	3.0	Kb
+
+*** compiling 	{{complement}? character [[-]] !"]" character}
+*** time = 	0.13	ms
+*** heapsize = 	1065	Kb
+*** #inst = 	549
+*** treesize = 	5.8	Kb
+
+*** compiling 	{{complement}? {!"]" character}+}
+*** time = 	0.1	ms
+*** heapsize = 	1084	Kb
+*** #inst = 	561
+*** treesize = 	5.8	Kb
+
+*** compiling 	{!":" .}+
+*** time = 	0.04	ms
+*** heapsize = 	1092	Kb
+*** #inst = 	267
+*** treesize = 	3.0	Kb
+
+*** compiling 	{{complement}? name}
+*** time = 	0.04	ms
+*** heapsize = 	1096	Kb
+*** #inst = 	273
+*** treesize = 	3.1	Kb
+
+*** compiling 	{"[" {{":" named_charset ":]"} / {range "]"} / {charlist "]"}}}
+*** time = 	0.1	ms
+*** heapsize = 	1156	Kb
+*** #inst = 	1401
+*** treesize = 	13.9	Kb
+
+*** compiling 	{[[0-9]]}*
+*** time = 	0.03	ms
+*** heapsize = 	1147	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{[[0-9]]}*
+*** time = 	0.05	ms
+*** heapsize = 	1148	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{"{" atmos low atmos {"," atmos high atmos}? "}"}
+*** time = 	0.11	ms
+*** heapsize = 	1212	Kb
+*** #inst = 	1200
+*** treesize = 	11.0	Kb
+
+*** compiling 	{atmos ~ {[[0-9]]}+}
+*** time = 	0.06	ms
+*** heapsize = 	1195	Kb
+*** #inst = 	410
+*** treesize = 	4.0	Kb
+
+*** compiling 	{star / question / plus / repetition}
+*** time = 	0.05	ms
+*** heapsize = 	1208	Kb
+*** #inst = 	1220
+*** treesize = 	11.1	Kb
+
+*** compiling 	{identifier ~ atmos ~ "="}
+*** time = 	0.05	ms
+*** heapsize = 	1224	Kb
+*** #inst = 	558
+*** treesize = 	5.3	Kb
+
+*** compiling 	{keyword / assignment_prefix}
+*** time = 	0.03	ms
+*** heapsize = 	1226	Kb
+*** #inst = 	611
+*** treesize = 	5.9	Kb
+
+*** compiling 	[[/]]
+*** time = 	0.02	ms
+*** heapsize = 	1232	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	[[&]]
+*** time = 	0.1	ms
+*** heapsize = 	1233	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	[[(]]
+*** time = 	0.02	ms
+*** heapsize = 	1234	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	[[{]]
+*** time = 	0.02	ms
+*** heapsize = 	1235	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	[[\[]]
+*** time = 	0.02	ms
+*** heapsize = 	1236	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	[[)]]
+*** time = 	0.02	ms
+*** heapsize = 	1237	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	[[}]]
+*** time = 	0.02	ms
+*** heapsize = 	1238	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	[[\]]]
+*** time = 	0.02	ms
+*** heapsize = 	1239	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	[[!]]
+*** time = 	0.03	ms
+*** heapsize = 	1240	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	[[>]]
+*** time = 	0.02	ms
+*** heapsize = 	1241	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	[[<]]
+*** time = 	0.02	ms
+*** heapsize = 	1242	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	{negation / lookahead / lookbehind}
+*** time = 	0.11	ms
+*** heapsize = 	1244	Kb
+*** #inst = 	15
+*** treesize = 	0.6	Kb
+
+*** compiling 	
+grammar
+	alias exp = {atmos {syntax_error / choice / sequence / and_exp / term}}
+	syntax_error = {stmnt_prefix rest_of_line}
+	application = {{identifier ":"} ~ atmos ~ {arg / arglist / rawarglist}}
+	arglist = {atmos open int_or_exp {atmos "," int_or_exp}* close}
+	rawarglist = {atmos openraw int_or_exp {atmos "," int_or_exp}* closeraw}
+	arg = {term / int}
+	alias int_or_exp = {atmos ~ {int / exp}}
+	choice = {term atmos slash exp}
+	and_exp = {term atmos and exp}
+	sequence = {term {atmos !stmnt_prefix exp}+}
+	term = {atmos {application / identifier / quoted_string / raw / cooked / simple_charset / bracket / predicate / hash_exp} {quantifier}?}
+	bracket = {openbracket {complement}? exp atmos closebracket}
+	cooked = {open exp atmos close}
+	raw = {openraw exp atmos closeraw}
+	predicate = {predicate_symbol {ws}? term}
+end
+
+*** time = 	1.48	ms
+*** heapsize = 	1867	Kb
+*** #inst = 	11337
+*** treesize = 	100.2	Kb
+
+*** compiling 	
+grammar
+	alias stmnt = {local_ / exported}
+	alias exported = {alias_ / grammar_ / assignment_}
+	local_ = {"local" ~ atmos ~ {alias_ / grammar_ / assignment_}}
+	alias_ = {"alias" ~ atmos ~ identifier ~ {ws}? ~ "=" ~ exp}
+	grammar_ = {"grammar" ~ {atmos {alias_ / assignment_}}+ ~ atmos ~ end_token}
+	assignment_ = {identifier ~ {ws}? ~ "=" ~ exp}
+end
+
+*** time = 	1.2	ms
+*** heapsize = 	2494	Kb
+*** #inst = 	25763
+*** treesize = 	225.8	Kb
+
+*** compiling 	{[[0-9]] {[[0-9]]}?}
+*** time = 	0.06	ms
+*** heapsize = 	2388	Kb
+*** #inst = 	13
+*** treesize = 	0.6	Kb
+
+*** compiling 	major
+*** time = 	0.01	ms
+*** heapsize = 	2388	Kb
+*** #inst = 	15
+*** treesize = 	0.6	Kb
+
+*** compiling 	{major "." minor}
+*** time = 	0.03	ms
+*** heapsize = 	2391	Kb
+*** #inst = 	30
+*** treesize = 	0.8	Kb
+
+*** compiling 	{quoted_string / {id {"/" id}*}}
+*** time = 	0.05	ms
+*** heapsize = 	2398	Kb
+*** #inst = 	310
+*** treesize = 	3.4	Kb
+
+*** compiling 	{atmos ~ importpath ~ {"as" ~ {packagename / dot}}?}
+*** time = 	0.17	ms
+*** heapsize = 	2435	Kb
+*** #inst = 	945
+*** treesize = 	8.6	Kb
+
+*** compiling 	{"rpl" ws version_spec {{ws}? ";"}?}
+*** time = 	0.07	ms
+*** heapsize = 	2429	Kb
+*** #inst = 	68
+*** treesize = 	1.2	Kb
+
+*** compiling 	{"package" ws packagename {{ws}? ";"}?}
+*** time = 	0.07	ms
+*** heapsize = 	2435	Kb
+*** #inst = 	53
+*** treesize = 	1.1	Kb
+
+*** compiling 	{{"import" import_spec} ~ {{"," ~ atmos ~ import_spec} {~ {"," ~ atmos ~ import_spec}}*}? ~ {ws}? ~ {";"}?}
+*** time = 	0.37	ms
+*** heapsize = 	2837	Kb
+*** #inst = 	4306
+*** treesize = 	37.1	Kb
+
+*** compiling 	{{atmos {";" / package_decl / import_decl / language_decl / stmnt / syntax_error}}* atmos $}
+*** time = 	1.78	ms
+*** heapsize = 	4867	Kb
+*** #inst = 	31099
+*** treesize = 	271.7	Kb
+
+*** compiling 	{{exp atmos} / syntax_error}
+*** time = 	0.07	ms
+*** heapsize = 	4205	Kb
+*** #inst = 	11917
+*** treesize = 	105.4	Kb
+
+*** compiling 	{atmos ~ language_decl}
+*** time = 	0.05	ms
+*** heapsize = 	4323	Kb
+*** #inst = 	469
+*** treesize = 	4.6	Kb
+
+*** compiling 	preparse
+*** time = 	0.01	ms
+*** heapsize = 	4261	Kb
+*** #inst = 	471
+*** treesize = 	4.6	Kb
+
+*** compiling 	rpl_statements
+*** time = 	0.01	ms
+*** heapsize = 	4262	Kb
+*** #inst = 	31101
+*** treesize = 	271.7	Kb
+
+*** compiling 	rpl_expression
+*** time = 	0.02	ms
+*** heapsize = 	4262	Kb
+*** #inst = 	11919
+*** treesize = 	105.4	Kb
+
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 14
+lpcap.c:795:caploop(): nesting depth = 15
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 14
+*** compiling 	{[0-9] [0-9] [0-9] [0-9]}
+*** time = 	0.04	ms
+*** heapsize = 	4638	Kb
+*** #inst = 	21
+*** treesize = 	0.7	Kb
+
+*** compiling 	{{"1" [0-2]} / {{"0"}? [1-9]}}
+*** time = 	0.06	ms
+*** heapsize = 	4641	Kb
+*** #inst = 	21
+*** treesize = 	0.6	Kb
+
+*** compiling 	{{"3" [01]} / {[12] [0-9]} / {{"0"}? [1-9]}}
+*** time = 	0.07	ms
+*** heapsize = 	4647	Kb
+*** #inst = 	37
+*** treesize = 	0.8	Kb
+
+*** compiling 	{year "-" month "-" day}
+*** time = 	0.05	ms
+*** heapsize = 	4651	Kb
+*** #inst = 	84
+*** treesize = 	1.3	Kb
+
+*** compiling 	{"Mon" / "Tue" / "Wed" / "Thu" / "Fri" / "Sat" / "Sun"}
+*** time = 	0.06	ms
+*** heapsize = 	4656	Kb
+*** #inst = 	50
+*** treesize = 	0.9	Kb
+
+*** compiling 	{"Monday" / "Tuesday" / "Wednesday" / "Thursday" / "Friday" / "Saturday" / "Sunday"}
+*** time = 	0.07	ms
+*** heapsize = 	4665	Kb
+*** #inst = 	79
+*** treesize = 	1.6	Kb
+
+*** compiling 	{day_longname / day_shortname}
+*** time = 	0.08	ms
+*** heapsize = 	4665	Kb
+*** #inst = 	141
+*** treesize = 	2.1	Kb
+
+*** compiling 	{"Jan" / "Feb" / "Mar" / "Apr" / "May" / "Jun" / "Jul" / "Aug" / "Sep" / "Oct" / "Nov" / "Dec"}
+*** time = 	0.17	ms
+*** heapsize = 	4679	Kb
+*** #inst = 	89
+*** treesize = 	1.3	Kb
+
+*** compiling 	{"January" / "February" / "March" / "April" / "May" / "June" / "July" / "August" / "September" / "October" / "November" / "December"}
+*** time = 	0.19	ms
+*** heapsize = 	4692	Kb
+*** #inst = 	127
+*** treesize = 	2.2	Kb
+
+*** compiling 	{month_longname / month_shortname}
+*** time = 	0.05	ms
+*** heapsize = 	4689	Kb
+*** #inst = 	228
+*** treesize = 	3.1	Kb
+
+*** compiling 	{{day_name ~ ","}? ~ day ~ month_name ~ year}
+*** time = 	0.1	ms
+*** heapsize = 	4742	Kb
+*** #inst = 	848
+*** treesize = 	8.6	Kb
+
+*** compiling 	{year "-" month "-" day}
+*** time = 	0.05	ms
+*** heapsize = 	4721	Kb
+*** #inst = 	84
+*** treesize = 	1.3	Kb
+
+*** compiling 	{year "/" month "/" day}
+*** time = 	0.05	ms
+*** heapsize = 	4725	Kb
+*** #inst = 	84
+*** treesize = 	1.3	Kb
+
+*** compiling 	{year " " month " " day}
+*** time = 	0.21	ms
+*** heapsize = 	4729	Kb
+*** #inst = 	84
+*** treesize = 	1.3	Kb
+
+*** compiling 	{year " " month_name " " day}
+*** time = 	0.06	ms
+*** heapsize = 	4740	Kb
+*** #inst = 	291
+*** treesize = 	3.7	Kb
+
+*** compiling 	{{[0-9] [0-9] [0-9] [0-9]} / {[0-9] [0-9]}}
+*** time = 	0.06	ms
+*** heapsize = 	4741	Kb
+*** #inst = 	37
+*** treesize = 	0.8	Kb
+
+*** compiling 	{month "-" day "-" short_long_year}
+*** time = 	0.05	ms
+*** heapsize = 	4745	Kb
+*** #inst = 	101
+*** treesize = 	1.4	Kb
+
+*** compiling 	{month "/" day "/" short_long_year}
+*** time = 	0.05	ms
+*** heapsize = 	4749	Kb
+*** #inst = 	101
+*** treesize = 	1.4	Kb
+
+*** compiling 	{day "." month "." short_long_year}
+*** time = 	0.05	ms
+*** heapsize = 	4754	Kb
+*** #inst = 	101
+*** treesize = 	1.4	Kb
+
+*** compiling 	{day ~ month_name ~ year}
+*** time = 	0.06	ms
+*** heapsize = 	4769	Kb
+*** #inst = 	495
+*** treesize = 	5.2	Kb
+
+*** compiling 	{{day_name ~ {","}?}? ~ month_name ~ day ~ {","}? ~ {year}?}
+*** time = 	0.27	ms
+*** heapsize = 	4840	Kb
+*** #inst = 	974
+*** treesize = 	9.5	Kb
+
+*** compiling 	{us_dashed / us_slashed / us_long / us_short}
+*** time = 	0.1	ms
+*** heapsize = 	4824	Kb
+*** #inst = 	1704
+*** treesize = 	16.2	Kb
+
+*** compiling 	{us / eur / dashed / slashed / rfc2822 / rfc3339 / spaced_en / spaced}
+*** time = 	0.11	ms
+*** heapsize = 	4987	Kb
+*** #inst = 	3343
+*** treesize = 	31.8	Kb
+
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 14
+*** compiling 	[0-9]
+*** time = 	0.02	ms
+*** heapsize = 	4959	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{{[01] [0-9]} / {"2" [0-3]}}
+*** time = 	0.05	ms
+*** heapsize = 	4962	Kb
+*** #inst = 	21
+*** treesize = 	0.6	Kb
+
+*** compiling 	{[0-5] [0-9]}
+*** time = 	0.02	ms
+*** heapsize = 	4964	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	{{[0-5] [0-9]} / "60"}
+*** time = 	0.03	ms
+*** heapsize = 	4967	Kb
+*** #inst = 	17
+*** treesize = 	0.6	Kb
+
+*** compiling 	{[:,.] {[0-9]}+}
+*** time = 	0.11	ms
+*** heapsize = 	4969	Kb
+*** #inst = 	16
+*** treesize = 	0.6	Kb
+
+*** compiling 	{[+-] hour ":" minute}
+*** time = 	0.09	ms
+*** heapsize = 	4972	Kb
+*** #inst = 	39
+*** treesize = 	0.9	Kb
+
+*** compiling 	{[Zz] / numoffset}
+*** time = 	0.03	ms
+*** heapsize = 	4974	Kb
+*** #inst = 	50
+*** treesize = 	0.9	Kb
+
+*** compiling 	{hour ":" minute ":" second {secfrac}?}
+*** time = 	0.07	ms
+*** heapsize = 	4980	Kb
+*** #inst = 	75
+*** treesize = 	1.2	Kb
+
+*** compiling 	{rfc3339_time offset}
+*** time = 	0.03	ms
+*** heapsize = 	4981	Kb
+*** #inst = 	124
+*** treesize = 	1.8	Kb
+
+*** compiling 	{[+-] {d d d d}}
+*** time = 	0.06	ms
+*** heapsize = 	4986	Kb
+*** #inst = 	26
+*** treesize = 	0.7	Kb
+
+*** compiling 	{"UTC" / "UT" / "GMT" / "CET" / "EST" / "EDT" / "CST" / "CDT" / "MST" / "MDT" / "PST" / "PDT"}
+*** time = 	0.09	ms
+*** heapsize = 	4997	Kb
+*** #inst = 	92
+*** treesize = 	1.3	Kb
+
+*** compiling 	{rfc2822_numeric_zone / rfc2822_obsolete_zone}
+*** time = 	0.03	ms
+*** heapsize = 	4994	Kb
+*** #inst = 	121
+*** treesize = 	1.6	Kb
+
+*** compiling 	{hour ":" minute {":" second}?}
+*** time = 	0.07	ms
+*** heapsize = 	5000	Kb
+*** #inst = 	58
+*** treesize = 	1.0	Kb
+
+*** compiling 	{rfc2822_time rfc2822_zone}
+*** time = 	0.03	ms
+*** heapsize = 	5003	Kb
+*** #inst = 	178
+*** treesize = 	2.2	Kb
+
+*** compiling 	{hour ":" minute {":" second {secfrac}?}?}
+*** time = 	0.08	ms
+*** heapsize = 	5013	Kb
+*** #inst = 	77
+*** treesize = 	1.3	Kb
+
+*** compiling 	{"AM" / "am" / "PM" / "pm"}
+*** time = 	0.04	ms
+*** heapsize = 	5014	Kb
+*** #inst = 	21
+*** treesize = 	0.6	Kb
+
+*** compiling 	{d}+
+*** time = 	0.02	ms
+*** heapsize = 	5015	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	{{{[0]}? [0-9]} / {[1] [0-9]} / {[2] [0-3]}}
+*** time = 	0.08	ms
+*** heapsize = 	5020	Kb
+*** #inst = 	35
+*** treesize = 	0.7	Kb
+
+*** compiling 	{{short_hour ":" minute {":" second {secfrac}?}?} ~ {ampm}?}
+*** time = 	0.1	ms
+*** heapsize = 	5034	Kb
+*** #inst = 	228
+*** treesize = 	2.4	Kb
+
+*** compiling 	{{rfc2822_time ":" sequence} ~ rfc2822_zone}
+*** time = 	0.13	ms
+*** heapsize = 	5040	Kb
+*** #inst = 	298
+*** treesize = 	3.1	Kb
+
+*** compiling 	{hour "." minute "." second "." sequence}
+*** time = 	0.06	ms
+*** heapsize = 	5046	Kb
+*** #inst = 	65
+*** treesize = 	1.2	Kb
+
+*** compiling 	{rfc2822_time ~ {rfc2822_zone}?}
+*** time = 	0.05	ms
+*** heapsize = 	5054	Kb
+*** #inst = 	297
+*** treesize = 	3.0	Kb
+
+*** compiling 	{rfc3339_time {[:space:]}* {offset}?}
+*** time = 	0.05	ms
+*** heapsize = 	5059	Kb
+*** #inst = 	143
+*** treesize = 	1.8	Kb
+
+*** compiling 	{rfc3339 / rfc2822_frac / websphere / simple / db2}
+*** time = 	0.06	ms
+*** heapsize = 	5084	Kb
+*** #inst = 	857
+*** treesize = 	8.0	Kb
+
+*** compiling 	{date.us_slashed / date.slashed}
+*** time = 	0.04	ms
+*** heapsize = 	5052	Kb
+*** #inst = 	198
+*** treesize = 	2.2	Kb
+
+*** compiling 	{date.us_dashed / date.dashed}
+*** time = 	0.03	ms
+*** heapsize = 	5055	Kb
+*** #inst = 	198
+*** treesize = 	2.2	Kb
+
+*** compiling 	{time.simple / time.rfc2822_frac / time.rfc3339}
+*** time = 	0.09	ms
+*** heapsize = 	5063	Kb
+*** #inst = 	472
+*** treesize = 	4.6	Kb
+
+*** compiling 	{date.rfc3339 [Tt ] time.rfc3339_strict}
+*** time = 	0.09	ms
+*** heapsize = 	5065	Kb
+*** #inst = 	216
+*** treesize = 	2.6	Kb
+
+*** compiling 	{date.rfc2822 time.rfc2822}
+*** time = 	0.04	ms
+*** heapsize = 	5079	Kb
+*** #inst = 	1148
+*** treesize = 	11.2	Kb
+
+*** compiling 	{slashed_date ":" time.rfc2822}
+*** time = 	0.05	ms
+*** heapsize = 	5097	Kb
+*** #inst = 	497
+*** treesize = 	4.8	Kb
+
+*** compiling 	{date.us_long ~ common_times}
+*** time = 	0.05	ms
+*** heapsize = 	5126	Kb
+*** #inst = 	1550
+*** treesize = 	14.5	Kb
+
+*** compiling 	{date.us_short ~ common_times}
+*** time = 	0.06	ms
+*** heapsize = 	5147	Kb
+*** #inst = 	1071
+*** treesize = 	10.2	Kb
+
+*** compiling 	{slashed_date ~ common_times ~ {time.rfc2822_zone}?}
+*** time = 	0.07	ms
+*** heapsize = 	5184	Kb
+*** #inst = 	1009
+*** treesize = 	9.1	Kb
+
+*** compiling 	{dashed_date ~ common_times ~ {time.rfc2822_zone}?}
+*** time = 	0.13	ms
+*** heapsize = 	5205	Kb
+*** #inst = 	1009
+*** treesize = 	9.1	Kb
+
+*** compiling 	{date.spaced ~ common_times ~ {time.rfc2822_zone}?}
+*** time = 	0.08	ms
+*** heapsize = 	5222	Kb
+*** #inst = 	897
+*** treesize = 	8.2	Kb
+
+*** compiling 	{date.spaced_en ~ common_times ~ {time.rfc2822_zone}?}
+*** time = 	0.1	ms
+*** heapsize = 	5251	Kb
+*** #inst = 	1104
+*** treesize = 	10.6	Kb
+
+*** compiling 	{slashed_date ~ time.websphere}
+*** time = 	0.05	ms
+*** heapsize = 	5247	Kb
+*** #inst = 	600
+*** treesize = 	5.7	Kb
+
+*** compiling 	{date.rfc3339 "-" time.db2}
+*** time = 	0.04	ms
+*** heapsize = 	5254	Kb
+*** #inst = 	153
+*** treesize = 	2.0	Kb
+
+*** compiling 	{{date.day_name ~ {","}?}? ~ date.month_name ~ date.day ~ {","}? ~ time.rfc2822_frac ~ {time.rfc2822_zone}? ~ {date.year}?}
+*** time = 	0.26	ms
+*** heapsize = 	5384	Kb
+*** #inst = 	1392
+*** treesize = 	13.1	Kb
+
+*** compiling 	{{date.us_dashed / date.slashed / date.us_slashed / date.slashed} ~ time.rfc2822_frac ~ {time.rfc2822_zone}? ~ {date.year}?}
+*** time = 	0.27	ms
+*** heapsize = 	5349	Kb
+*** #inst = 	951
+*** treesize = 	8.6	Kb
+
+*** compiling 	{dashed / slashed / rfc3339 / mixed1 / mixed2 / us_long / us_short / rfc2822 / websphere / db2 / spaced_en / spaced}
+*** time = 	0.91	ms
+*** heapsize = 	6009	Kb
+*** #inst = 	11211
+*** treesize = 	100.2	Kb
+
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 17
+*** compiling 	{[:digit:] {[:digit:]}{,2}}
+*** time = 	0.11	ms
+*** heapsize = 	5805	Kb
+*** #inst = 	20
+*** treesize = 	0.7	Kb
+
+*** compiling 	{ipv4_component {{"." ipv4_component} {"." ipv4_component} {"." ipv4_component}}}
+*** time = 	0.07	ms
+*** heapsize = 	5809	Kb
+*** #inst = 	80
+*** treesize = 	1.4	Kb
+
+*** compiling 	{[:xdigit:] {[:xdigit:]}{,3}}
+*** time = 	0.03	ms
+*** heapsize = 	5809	Kb
+*** #inst = 	27
+*** treesize = 	0.8	Kb
+
+*** compiling 	{":" !>ipv4 ipv6_component}
+*** time = 	0.04	ms
+*** heapsize = 	5810	Kb
+*** compiling 	{{ipv6_component {ipv6_rest ipv6_rest ipv6_rest ipv6_rest ipv6_rest ipv6_rest ipv6_rest}} / {ipv6_component "::" ipv6_component {ipv6_rest}{,4}} / {ipv6_component {ipv6_rest} "::" ipv6_component {ipv6_rest}{,3}} / {ipv6_component {ipv6_rest ipv6_rest} "::" ipv6_component {ipv6_rest}{,2}} / {ipv6_component {ipv6_rest ipv6_rest ipv6_rest} "::" ipv6_component {ipv6_rest}?} / {ipv6_component {ipv6_rest ipv6_rest ipv6_rest ipv6_rest} "::" ipv6_component} / {ipv6_component {ipv6_rest ipv6_rest ipv6_rest ipv6_rest ipv6_rest} "::"} / {"::" ipv6_component {ipv6_rest}{,5}} / {"::"}}
+*** time = 	0.07	ms
+*** heapsize = 	5810	Kb
+*** compiling 	{":" {ipv4 / ipv6_component}}
+*** time = 	0.04	ms
+*** heapsize = 	5810	Kb
+*** compiling 	{{ipv6_component {ipv6_rest ipv6_rest ipv6_rest ipv6_rest ipv6_rest ipv6_rest} ipv6_end} / {ipv6_component "::" ipv6_component {ipv6_rest}{,3} ipv6_end} / {ipv6_component {ipv6_rest} "::" ipv6_component {ipv6_rest}{,2} ipv6_end} / {ipv6_component {ipv6_rest ipv6_rest} "::" ipv6_component {ipv6_rest}? ipv6_end} / {ipv6_component {ipv6_rest ipv6_rest ipv6_rest} "::" ipv6_component ipv6_end} / {ipv6_component {ipv6_rest ipv6_rest ipv6_rest ipv6_rest} "::" ipv4} / {"::" ipv6_component {ipv6_rest}{,4} ipv6_end} / {"::" ipv4}}
+*** time = 	0.02	ms
+*** heapsize = 	5811	Kb
+*** compiling 	ip_address_v4
+*** time = 	0.01	ms
+*** heapsize = 	5811	Kb
+*** #inst = 	80
+*** treesize = 	1.4	Kb
+
+*** compiling 	{ipv6_mixed / ip_address_v6}
+*** time = 	0.01	ms
+*** heapsize = 	5812	Kb
+*** compiling 	{ipv4 / ipv6}
+*** time = 	0.02	ms
+*** heapsize = 	5812	Kb
+*** compiling 	{[0-9]}+
+*** time = 	0.05	ms
+*** heapsize = 	5814	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	{":" port}
+*** time = 	0.03	ms
+*** heapsize = 	5815	Kb
+*** #inst = 	14
+*** treesize = 	0.6	Kb
+
+*** compiling 	[[A-Z] / [a-z]]
+*** time = 	0.03	ms
+*** heapsize = 	5817	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{let / [0-9]}
+*** time = 	0.03	ms
+*** heapsize = 	5818	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{let_dig / {"-" let_dig}}
+*** time = 	0.04	ms
+*** heapsize = 	5820	Kb
+*** #inst = 	16
+*** treesize = 	0.6	Kb
+
+*** compiling 	{let_dig {let_dig_hyp}*}
+*** time = 	0.04	ms
+*** heapsize = 	5822	Kb
+*** #inst = 	31
+*** treesize = 	0.7	Kb
+
+*** compiling 	{subdomain {"." subdomain}+ {"."}?}
+*** time = 	0.06	ms
+*** heapsize = 	5827	Kb
+*** #inst = 	100
+*** treesize = 	1.2	Kb
+
+*** compiling 	fqdn_strict_alias
+*** time = 	0.01	ms
+*** heapsize = 	5826	Kb
+*** #inst = 	100
+*** treesize = 	1.2	Kb
+
+*** compiling 	{{fqdn_strict_alias / subdomain} {port_spec}?}
+*** time = 	0.09	ms
+*** heapsize = 	5831	Kb
+*** #inst = 	155
+*** treesize = 	1.6	Kb
+
+*** compiling 	{[:alnum:] / [!#$%&'*+-/=?^_`.{|}~]}
+*** time = 	0.09	ms
+*** heapsize = 	5836	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{name_char {name_char / "."}*}
+*** time = 	0.08	ms
+*** heapsize = 	5836	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	{["] {[^"]}+ ["]}
+*** time = 	0.05	ms
+*** heapsize = 	5838	Kb
+*** #inst = 	13
+*** treesize = 	0.6	Kb
+
+*** compiling 	{quoted_name / unquoted_name}
+*** time = 	0.03	ms
+*** heapsize = 	5839	Kb
+*** #inst = 	27
+*** treesize = 	0.8	Kb
+
+*** compiling 	{name "@" host}
+*** time = 	0.03	ms
+*** heapsize = 	5840	Kb
+*** compiling 	[!$&'()*+,;=]
+*** time = 	0.03	ms
+*** heapsize = 	5842	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	[:/?#\[\]@]
+*** time = 	0.03	ms
+*** heapsize = 	5842	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{"%" {[[0-9] / [A-F] / [a-f]] [[0-9] / [A-F] / [a-f]]}}
+*** time = 	0.17	ms
+*** heapsize = 	5845	Kb
+*** #inst = 	12
+*** treesize = 	0.6	Kb
+
+*** compiling 	[[:alnum:] / [-._~]]
+*** time = 	0.06	ms
+*** heapsize = 	5846	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{unreserved / pct_encoded / sub_delims / ":" / "@"}
+*** time = 	0.05	ms
+*** heapsize = 	5849	Kb
+*** #inst = 	40
+*** treesize = 	0.8	Kb
+
+*** compiling 	{[:alnum:] {unreserved / pct_encoded / sub_delims}*}
+*** time = 	0.06	ms
+*** heapsize = 	5852	Kb
+*** #inst = 	45
+*** treesize = 	0.8	Kb
+
+*** compiling 	{regname {"." regname}* {"."}?}
+*** time = 	0.1	ms
+*** heapsize = 	5858	Kb
+*** #inst = 	99
+*** treesize = 	1.2	Kb
+
+*** compiling 	{"[" ipv6 "]"}
+*** time = 	0.02	ms
+*** heapsize = 	5857	Kb
+*** compiling 	{ip_literal / ipv4 / registered_name}
+*** time = 	0.01	ms
+*** heapsize = 	5857	Kb
+*** compiling 	{unreserved / pct_encoded / sub_delims / ":"}*
+*** time = 	0.05	ms
+*** heapsize = 	5861	Kb
+*** #inst = 	45
+*** treesize = 	0.7	Kb
+
+*** compiling 	{{userinfo "@"}? {host {port_spec}?}?}
+*** time = 	0.09	ms
+*** heapsize = 	5863	Kb
+*** compiling 	{unreserved / pct_encoded / sub_delims / "@"}+
+*** time = 	0.09	ms
+*** heapsize = 	5866	Kb
+*** #inst = 	79
+*** treesize = 	1.0	Kb
+
+*** compiling 	{pchar}+
+*** time = 	0.02	ms
+*** heapsize = 	5867	Kb
+*** #inst = 	89
+*** treesize = 	1.1	Kb
+
+*** compiling 	{pchar}*
+*** time = 	0.02	ms
+*** heapsize = 	5868	Kb
+*** #inst = 	50
+*** treesize = 	0.8	Kb
+
+*** compiling 	""
+*** time = 	0.01	ms
+*** heapsize = 	5867	Kb
+*** #inst = 	1
+*** treesize = 	0.5	Kb
+
+*** compiling 	{segment_nz {"/" segment}*}
+*** time = 	0.05	ms
+*** heapsize = 	5872	Kb
+*** #inst = 	143
+*** treesize = 	1.4	Kb
+
+*** compiling 	{segment_nz_nc {"/" segment}*}
+*** time = 	0.05	ms
+*** heapsize = 	5876	Kb
+*** #inst = 	133
+*** treesize = 	1.4	Kb
+
+*** compiling 	{"/" {segment_nz {"/" segment}*}*}
+*** time = 	0.08	ms
+*** heapsize = 	5885	Kb
+*** #inst = 	154
+*** treesize = 	1.5	Kb
+
+*** compiling 	{"/" segment}*
+*** time = 	0.08	ms
+*** heapsize = 	5885	Kb
+*** #inst = 	55
+*** treesize = 	0.8	Kb
+
+*** compiling 	{{"/" segment}+ / {segment_nz {"/" segment}+}}
+*** time = 	0.14	ms
+*** heapsize = 	5895	Kb
+*** #inst = 	299
+*** treesize = 	2.5	Kb
+
+*** compiling 	{{"//" authority path_abempty} / path_absolute / path_rootless}
+*** time = 	0.02	ms
+*** heapsize = 	5896	Kb
+*** compiling 	{pchar / "/" / "?"}*
+*** time = 	0.05	ms
+*** heapsize = 	5900	Kb
+*** #inst = 	60
+*** treesize = 	0.8	Kb
+
+*** compiling 	{pchar / "/" / "?"}*
+*** time = 	0.04	ms
+*** heapsize = 	5903	Kb
+*** #inst = 	60
+*** treesize = 	0.8	Kb
+
+*** compiling 	{[:alpha:] {[[:alnum:] / [+.-]]}*}
+*** time = 	0.05	ms
+*** heapsize = 	5905	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	{scheme ":" {authpath}? {"?" query}? {"#" fragment}?}
+*** time = 	0.03	ms
+*** heapsize = 	5906	Kb
+*** compiling 	{scheme ":" !":" authpath {"?" query}? {"#" fragment}?}
+*** time = 	0.04	ms
+*** heapsize = 	5908	Kb
+*** compiling 	{"GET" / "HEAD" / "PUT" / "POST" / "DELETE" / "TRACE" / "OPTIONS" / "CONNECT" / "PATCH"}
+*** time = 	0.25	ms
+*** heapsize = 	5917	Kb
+*** #inst = 	81
+*** treesize = 	1.5	Kb
+
+*** compiling 	{http_command_name ~ url}
+*** time = 	0.05	ms
+*** heapsize = 	5916	Kb
+*** compiling 	{"HTTP" "/" {[:digit:]}+ "." {[:digit:]}+}
+*** time = 	0.06	ms
+*** heapsize = 	5919	Kb
+*** #inst = 	27
+*** treesize = 	0.8	Kb
+
+*** compiling 	{{{{[:xdigit:] [:xdigit:] [:xdigit:] [:xdigit:]} "."} {{[:xdigit:] [:xdigit:] [:xdigit:] [:xdigit:]} "."}} {[:xdigit:] [:xdigit:] [:xdigit:] [:xdigit:]}}
+*** time = 	0.11	ms
+*** heapsize = 	5926	Kb
+*** #inst = 	63
+*** treesize = 	1.2	Kb
+
+*** compiling 	{{{{[:xdigit:] [:xdigit:]} "-"} {{[:xdigit:] [:xdigit:]} "-"} {{[:xdigit:] [:xdigit:]} "-"} {{[:xdigit:] [:xdigit:]} "-"} {{[:xdigit:] [:xdigit:]} "-"}} {[:xdigit:] [:xdigit:]}}
+*** time = 	0.14	ms
+*** heapsize = 	5933	Kb
+*** #inst = 	66
+*** treesize = 	1.3	Kb
+
+*** compiling 	{{{{[:xdigit:] [:xdigit:]} ":"} {{[:xdigit:] [:xdigit:]} ":"} {{[:xdigit:] [:xdigit:]} ":"} {{[:xdigit:] [:xdigit:]} ":"} {{[:xdigit:] [:xdigit:]} ":"}} {[:xdigit:] [:xdigit:]}}
+*** time = 	0.28	ms
+*** heapsize = 	5939	Kb
+*** #inst = 	66
+*** treesize = 	1.3	Kb
+
+*** compiling 	{MAC_cisco / MAC_windows / MAC_common}
+*** time = 	0.06	ms
+*** heapsize = 	5942	Kb
+*** #inst = 	210
+*** treesize = 	2.9	Kb
+
+*** compiling 	{ip / MAC / fqdn_strict / email / url / path}
+*** time = 	0.01	ms
+*** heapsize = 	5943	Kb
+*** compiling 	{":" !>ipv4 ipv6_component}
+*** time = 	0.05	ms
+*** heapsize = 	5949	Kb
+*** #inst = 	123
+*** treesize = 	1.8	Kb
+
+*** compiling 	{{ipv6_component {ipv6_rest ipv6_rest ipv6_rest ipv6_rest ipv6_rest ipv6_rest ipv6_rest}} / {ipv6_component "::" ipv6_component {ipv6_rest}{,4}} / {ipv6_component {ipv6_rest} "::" ipv6_component {ipv6_rest}{,3}} / {ipv6_component {ipv6_rest ipv6_rest} "::" ipv6_component {ipv6_rest}{,2}} / {ipv6_component {ipv6_rest ipv6_rest ipv6_rest} "::" ipv6_component {ipv6_rest}?} / {ipv6_component {ipv6_rest ipv6_rest ipv6_rest ipv6_rest} "::" ipv6_component} / {ipv6_component {ipv6_rest ipv6_rest ipv6_rest ipv6_rest ipv6_rest} "::"} / {"::" ipv6_component {ipv6_rest}{,5}} / {"::"}}
+*** time = 	1.25	ms
+*** heapsize = 	6470	Kb
+*** #inst = 	4965
+*** treesize = 	54.1	Kb
+
+*** compiling 	{":" {ipv4 / ipv6_component}}
+*** time = 	0.04	ms
+*** heapsize = 	6126	Kb
+*** #inst = 	115
+*** treesize = 	1.8	Kb
+
+*** compiling 	{{ipv6_component {ipv6_rest ipv6_rest ipv6_rest ipv6_rest ipv6_rest ipv6_rest} ipv6_end} / {ipv6_component "::" ipv6_component {ipv6_rest}{,3} ipv6_end} / {ipv6_component {ipv6_rest} "::" ipv6_component {ipv6_rest}{,2} ipv6_end} / {ipv6_component {ipv6_rest ipv6_rest} "::" ipv6_component {ipv6_rest}? ipv6_end} / {ipv6_component {ipv6_rest ipv6_rest ipv6_rest} "::" ipv6_component ipv6_end} / {ipv6_component {ipv6_rest ipv6_rest ipv6_rest ipv6_rest} "::" ipv4} / {"::" ipv6_component {ipv6_rest}{,4} ipv6_end} / {"::" ipv4}}
+*** time = 	0.62	ms
+*** heapsize = 	6567	Kb
+*** #inst = 	4395
+*** treesize = 	48.5	Kb
+
+*** compiling 	{ipv6_mixed / ip_address_v6}
+*** time = 	0.08	ms
+*** heapsize = 	6376	Kb
+*** #inst = 	9367
+*** treesize = 	102.2	Kb
+
+*** compiling 	{ipv4 / ipv6}
+*** time = 	0.08	ms
+*** heapsize = 	6581	Kb
+*** #inst = 	9456
+*** treesize = 	103.2	Kb
+
+*** compiling 	{name "@" host}
+*** time = 	0.03	ms
+*** heapsize = 	6685	Kb
+*** compiling 	{"[" ipv6 "]"}
+*** time = 	0.07	ms
+*** heapsize = 	6889	Kb
+*** #inst = 	9371
+*** treesize = 	102.3	Kb
+
+*** compiling 	{ip_literal / ipv4 / registered_name}
+*** time = 	0.17	ms
+*** heapsize = 	7097	Kb
+*** #inst = 	9564
+*** treesize = 	104.0	Kb
+
+*** compiling 	{{userinfo "@"}? {host {port_spec}?}?}
+*** time = 	0.32	ms
+*** heapsize = 	7622	Kb
+*** #inst = 	9646
+*** treesize = 	104.6	Kb
+
+*** compiling 	{{"//" authority path_abempty} / path_absolute / path_rootless}
+*** time = 	0.29	ms
+*** heapsize = 	7940	Kb
+*** #inst = 	10009
+*** treesize = 	107.0	Kb
+
+*** compiling 	{scheme ":" {authpath}? {"?" query}? {"#" fragment}?}
+*** time = 	0.79	ms
+*** heapsize = 	8486	Kb
+*** #inst = 	10162
+*** treesize = 	108.0	Kb
+
+*** compiling 	{scheme ":" !":" authpath {"?" query}? {"#" fragment}?}
+*** time = 	0.38	ms
+*** heapsize = 	8494	Kb
+*** #inst = 	10155
+*** treesize = 	108.0	Kb
+
+*** compiling 	{http_command_name ~ url}
+*** time = 	0.15	ms
+*** heapsize = 	8498	Kb
+*** #inst = 	10342
+*** treesize = 	109.9	Kb
+
+*** compiling 	{ip / MAC / fqdn_strict / email / url / path}
+*** time = 	0.13	ms
+*** heapsize = 	8818	Kb
+*** compiling 	{name "@" host}
+*** time = 	0.09	ms
+*** heapsize = 	8712	Kb
+*** #inst = 	9595
+*** treesize = 	104.4	Kb
+
+*** compiling 	{ip / MAC / fqdn_strict / email / url / path}
+*** time = 	0.48	ms
+*** heapsize = 	9877	Kb
+*** #inst = 	29864
+*** treesize = 	320.0	Kb
+
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 12
+*** compiling 	[:digit:]
+*** time = 	0.02	ms
+*** heapsize = 	9438	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	[[a-f] / [A-F]]
+*** time = 	0.09	ms
+*** heapsize = 	9439	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{digit / hex_letter}
+*** time = 	0.05	ms
+*** heapsize = 	9440	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{{[+-]}? {digit}+ !hex_letter}
+*** time = 	0.06	ms
+*** heapsize = 	9444	Kb
+*** #inst = 	25
+*** treesize = 	0.7	Kb
+
+*** compiling 	{[.] {digit}+}
+*** time = 	0.04	ms
+*** heapsize = 	9445	Kb
+*** #inst = 	12
+*** treesize = 	0.6	Kb
+
+*** compiling 	{{[+-]}? {digit}+ "." {digit}+}
+*** time = 	0.07	ms
+*** heapsize = 	9450	Kb
+*** #inst = 	29
+*** treesize = 	0.8	Kb
+
+*** compiling 	{[eE] {[+-]}? {digit}+}
+*** time = 	0.05	ms
+*** heapsize = 	9452	Kb
+*** #inst = 	23
+*** treesize = 	0.7	Kb
+
+*** compiling 	{mantissa {exp}?}
+*** time = 	0.04	ms
+*** heapsize = 	9455	Kb
+*** #inst = 	61
+*** treesize = 	1.1	Kb
+
+*** compiling 	{hex_digit}+
+*** time = 	0.02	ms
+*** heapsize = 	9456	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	{"0x" hex}
+*** time = 	0.03	ms
+*** heapsize = 	9457	Kb
+*** #inst = 	15
+*** treesize = 	0.6	Kb
+
+*** compiling 	{float / int}
+*** time = 	0.06	ms
+*** heapsize = 	9460	Kb
+*** #inst = 	99
+*** treesize = 	1.4	Kb
+
+*** compiling 	{{denoted_hex / float / int / hex} >~}
+*** time = 	0.06	ms
+*** heapsize = 	9471	Kb
+*** #inst = 	253
+*** treesize = 	2.6	Kb
+
+lpcap.c:795:caploop(): nesting depth = 12
+*** compiling 	{[:alpha:] {[[_] / [:alnum:]]}*}
+*** time = 	0.05	ms
+*** heapsize = 	9495	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	{[:alpha:] {[[_-] / [:alnum:]]}*}
+*** time = 	0.05	ms
+*** heapsize = 	9498	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	{[:alpha:] {[[$_-] / [:alnum:]]}*}
+*** time = 	0.05	ms
+*** heapsize = 	9501	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	id3
+*** time = 	0.01	ms
+*** heapsize = 	9501	Kb
+*** #inst = 	13
+*** treesize = 	0.6	Kb
+
+*** compiling 	{id {"." id}+}
+*** time = 	0.04	ms
+*** heapsize = 	9505	Kb
+*** #inst = 	45
+*** treesize = 	0.9	Kb
+
+*** compiling 	[:xdigit:]
+*** time = 	0.03	ms
+*** heapsize = 	9505	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{{h h h h h h h h} "-" {{{h h h h} "-"} {{h h h h} "-"} {{h h h h} "-"}} {h h h h h h h h h h h h}}
+*** time = 	0.48	ms
+*** heapsize = 	9525	Kb
+*** #inst = 	165
+*** treesize = 	2.4	Kb
+
+*** compiling 	{dotted / id / guid}
+*** time = 	0.04	ms
+*** heapsize = 	9521	Kb
+*** #inst = 	235
+*** treesize = 	3.1	Kb
+
+lpcap.c:795:caploop(): nesting depth = 3
+lpcap.c:795:caploop(): nesting depth = 16
+*** compiling 	[:space:]
+*** time = 	0.02	ms
+*** heapsize = 	9555	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	[:alpha:]
+*** time = 	0.03	ms
+*** heapsize = 	9555	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{[:alpha:]}+
+*** time = 	0.02	ms
+*** heapsize = 	9556	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	{[:upper:]}+
+*** time = 	0.02	ms
+*** heapsize = 	9557	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	{[:lower:]}+
+*** time = 	0.06	ms
+*** heapsize = 	9558	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	{[:upper:] {[:lower:]}*}
+*** time = 	0.05	ms
+*** heapsize = 	9560	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	["]
+*** time = 	0.01	ms
+*** heapsize = 	9560	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	{[\\] dquote}
+*** time = 	0.03	ms
+*** heapsize = 	9561	Kb
+*** #inst = 	3
+*** treesize = 	0.5	Kb
+
+*** compiling 	[']
+*** time = 	0.02	ms
+*** heapsize = 	9562	Kb
+*** #inst = 	2
+*** treesize = 	0.5	Kb
+
+*** compiling 	{[\\] squote}
+*** time = 	0.03	ms
+*** heapsize = 	9563	Kb
+*** #inst = 	3
+*** treesize = 	0.5	Kb
+
+*** compiling 	{squote {escaped_squote / {!squote .}}* squote}
+*** time = 	0.08	ms
+*** heapsize = 	9576	Kb
+*** #inst = 	147
+*** treesize = 	1.8	Kb
+
+*** compiling 	{dquote {escaped_dquote / {!dquote .}}* dquote}
+*** time = 	0.07	ms
+*** heapsize = 	9586	Kb
+*** #inst = 	147
+*** treesize = 	1.8	Kb
+
+*** compiling 	{sq / dq}
+*** time = 	0.03	ms
+*** heapsize = 	9587	Kb
+*** #inst = 	301
+*** treesize = 	3.2	Kb
+
+*** compiling 	{{[:upper:] [:upper:]} {[[:alnum:] / [-_$]]}*}
+*** time = 	0.06	ms
+*** heapsize = 	9579	Kb
+*** #inst = 	16
+*** treesize = 	0.6	Kb
+
+*** compiling 	[-_$:]
+*** time = 	0.02	ms
+*** heapsize = 	9580	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{[:alnum:] / special_char}
+*** time = 	0.03	ms
+*** heapsize = 	9580	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{{{special_char}+ [:alpha:] {any_id_char}*} / {[:alpha:] {[:alnum:]}* special_char {any_id_char}* !<":"}}
+*** time = 	0.11	ms
+*** heapsize = 	9589	Kb
+*** #inst = 	50
+*** treesize = 	1.0	Kb
+
+*** compiling 	{starts_with_caps / has_special_chars / id.dotted / id.guid}
+*** time = 	0.05	ms
+*** heapsize = 	9594	Kb
+*** #inst = 	295
+*** treesize = 	3.7	Kb
+
+*** compiling 	[:punct:]
+*** time = 	0.01	ms
+*** heapsize = 	9596	Kb
+*** #inst = 	6
+*** treesize = 	0.5	Kb
+
+*** compiling 	{[:^space:]}+
+*** time = 	0.02	ms
+*** heapsize = 	9597	Kb
+*** #inst = 	11
+*** treesize = 	0.6	Kb
+
+*** compiling 	{ts.any / date.any / time.any / net.any / identifier / num.any / word.any / punct / unmatched}
+*** time = 	2.46	ms
+*** heapsize = 	12695	Kb
+*** #inst = 	45928
+*** treesize = 	464.5	Kb
+
+*** compiling 	{
+grammar
+	alias find = {<search> thing}
+	alias <search> = {!thing .}*
+end
+}+
+*** time = 	6.14	ms
+*** heapsize = 	18006	Kb
+*** #inst = 	184019
+*** treesize = 	1859.2	Kb
+
+*** compiling 	all.things
+*** time = 	0.02	ms
+*** heapsize = 	17077	Kb
+*** #inst = 	184021
+*** treesize = 	1859.3	Kb
+
+lpcap.c:795:caploop(): nesting depth = 5
+{"type":"all.things","s":1,"subs":[{"type":"all.thing","s":1,"subs":[{"type":"ts.any","s":1,"subs":[{"type":"ts.mixed1","s":1,"subs":[{"type":"date.month_name","s":1,"subs":[{"type":"date.month_shortname","s":1,"e":4,"data":"Dec"}],"e":4,"data":"Dec"},{"type":"date.day","s":5,"e":7,"data":"23"},{"type":"time.rfc2822_frac","s":8,"subs":[{"type":"time.hour","s":8,"e":10,"data":"00"},{"type":"time.minute","s":11,"e":13,"data":"46"},{"type":"time.second","s":14,"e":16,"data":"43"}],"e":16,"data":"00:46:43"}],"e":17,"data":"Dec 23 00:46:43 "}],"e":17,"data":"Dec 23 00:46:43 "}],"e":17,"data":"Dec 23 00:46:43 "},{"type":"all.thing","s":17,"subs":[{"type":"all.identifier","s":17,"e":33,"data":"Jamies-Compabler"}],"e":33,"data":"Jamies-Compabler"},{"type":"all.thing","s":34,"subs":[{"type":"word.any","s":34,"e":43,"data":"newsyslog"}],"e":43,"data":"newsyslog"},{"type":"all.thing","s":43,"subs":[{"type":"all.punct","s":43,"e":44,"data":"["}],"e":44,"data":"["},{"type":"all.thing","s":44,"subs":[{"type":"num.any","s":44,"subs":[{"type":"num.int","s":44,"e":49,"data":"36337"}],"e":49,"data":"36337"}],"e":49,"data":"36337"},{"type":"all.thing","s":49,"subs":[{"type":"all.punct","s":49,"e":50,"data":"]"}],"e":50,"data":"]"},{"type":"all.thing","s":50,"subs":[{"type":"all.punct","s":50,"e":51,"data":":"}],"e":51,"data":":"},{"type":"all.thing","s":52,"subs":[{"type":"word.any","s":52,"e":59,"data":"logfile"}],"e":59,"data":"logfile"},{"type":"all.thing","s":60,"subs":[{"type":"word.any","s":60,"e":66,"data":"turned"}],"e":66,"data":"turned"},{"type":"all.thing","s":67,"subs":[{"type":"word.any","s":67,"e":71,"data":"over"}],"e":71,"data":"over"}],"e":71,"data":"Dec 23 00:46:43 Jamies-Compabler newsyslog[36337]: logfile turned over"}
+real         1.45
+user         0.47
+sys          0.03
+[~/Projects/rosie-lpeg/src]$
