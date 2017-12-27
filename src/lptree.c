@@ -168,7 +168,7 @@ static int addtoktable (lua_State *L, int idx) {
     lua_getuservalue(L, -1);  /* get ktable from pattern */
     n = lua_rawlen(L, -1);
     if (n >= MAXCAPIDX)
-      return luaL_error(L, "too many Lua values in pattern");
+      return luaL_error(L, "(add) too many Lua values in pattern: %d", n);
     else {
       lua_pushvalue(L, idx);  /* element to be added */
       lua_rawseti(L, -2, ++n);
@@ -202,7 +202,7 @@ static int concattable (lua_State *L, int idx1, int idx2) {
   int n1 = ktablelen(L, idx1);
   int n2 = ktablelen(L, idx2);
   if ((n1 + n2) > MAXCAPIDX)
-    return luaL_error(L, "too many Lua values in pattern");
+    return luaL_error(L, "(concat) too many Lua values in pattern: %d", (n1+n2));
   if (n1 == 0) return 0;  /* nothing to correct */
   for (i = 1; i <= n1; i++) {
     lua_rawgeti(L, idx1, i);
@@ -870,6 +870,18 @@ static int lp_matchtime (lua_State *L) {
   return 1;
 }
 
+static Instruction *prepcompile (lua_State *L, Pattern *p, int idx);
+
+/* do the code generation for pattern (if needed), and return the
+   resulting number of instructions
+ */
+static int r_codegen_if_needed (lua_State *L) {
+  Pattern *p = getpattern(L, 1);
+  if (p->code == NULL)  /* not compiled yet? */
+    prepcompile(L, p, 1);
+  lua_pushinteger(L, p->codesize);
+  return 1;
+}
 
 static int r_pattern_size (lua_State *L) {
   Pattern *p = getpattern(L, 1);
@@ -1408,6 +1420,7 @@ static struct luaL_Reg pattreg[] = {
   /* Rosie-specific functions below */
   {"usize", r_userdata_size},
   {"psize", r_pattern_size},
+  {"codegen", r_codegen_if_needed},
   {"rcap", r_capture},
   {"rconstcap", r_constcapture},
   {"rmatch", r_match_lua},
