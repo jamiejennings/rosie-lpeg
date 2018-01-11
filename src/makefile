@@ -35,7 +35,14 @@ CWARNS = -Wall -Wextra -pedantic \
 
 
 CFLAGS = $(CWARNS) $(COPT) -std=c99 -I$(LUADIR)/include -fPIC
-CC = gcc
+
+ifeq ($(PLATFORM), macosx)
+CC= cc
+else
+CC= gcc
+endif
+
+
 
 default:
 	@echo "Please specify a platform to build for.  Choices are: linux, macosx"
