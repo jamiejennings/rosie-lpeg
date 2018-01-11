@@ -695,7 +695,7 @@ encoder_functions json_encoder = { json_Open, json_Fullcapture, json_Close };
 
 //#define MAXCAP_DEBUG 1
 
-struct stack_t {
+typedef struct stack_t {
   int limit;
   int top;
 #ifdef MAXCAP_DEBUG
@@ -704,7 +704,7 @@ struct stack_t {
 #endif
   const char *starts[R_MAXDEPTH+1];
   int counts[R_MAXDEPTH+1];
-} stack;
+};
 
 static void push(struct stack_t *s, const char *start, int count, lua_State *L) {
   s->top++;
@@ -741,6 +741,7 @@ static int caploop(CapState *cs, encoder_functions *encode, rBuffer *buf) {
   lua_State *L = cs->L;
   const char *start;
   int count = 0;
+  struct stack_t stack;
   init_stack(&stack);
   push(&stack, cs->cap->s, 0, L);
   err = encode->Open(cs, buf, 0); if (err) return err;
