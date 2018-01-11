@@ -693,10 +693,12 @@ encoder_functions debug_encoder = { debug_Open, debug_Fullcapture, debug_Close }
 encoder_functions byte_encoder = { byte_Open, byte_Fullcapture, byte_Close };
 encoder_functions json_encoder = { json_Open, json_Fullcapture, json_Close };
 
+//#define MAXCAP_DEBUG 1
+
 struct stack_t {
   int limit;
   int top;
-#ifdef LPEG_DEBUG
+#ifdef MAXCAP_DEBUG
   /* track the amount of the stack actually used, for use in future optimization */
   int maxtop;
 #endif
@@ -706,7 +708,7 @@ struct stack_t {
 
 static void push(struct stack_t *s, const char *start, int count, lua_State *L) {
   s->top++;
-#ifdef LPEG_DEBUG
+#ifdef MAXCAP_DEBUG
   if (s->top > s->maxtop) s->maxtop = s->top;
 #endif
   if (s->top >= s->limit) luaL_error(L, "max pattern nesting depth exceeded");
@@ -722,7 +724,7 @@ static void pop(struct stack_t *s) {
 static void init_stack(struct stack_t *s) {
   s->limit = R_MAXDEPTH;
   s->top = 0;
-#ifdef LPEG_DEBUG
+#ifdef MAXCAP_DEBUG
   s->maxtop = 0;
 #endif
 }
@@ -782,7 +784,7 @@ static int caploop(CapState *cs, encoder_functions *encode, rBuffer *buf) {
 	start = stack.starts[stack.top];
       }
 
-#ifdef LPEG_DEBUG
+#ifdef MAXCAP_DEBUG
       LOGf("nesting depth = %d\n", stack.maxtop);
 #endif
       return ROSIE_HALT;
@@ -791,7 +793,7 @@ static int caploop(CapState *cs, encoder_functions *encode, rBuffer *buf) {
     cs->cap++;
     count++;
   }
-#ifdef LPEG_DEBUG
+#ifdef MAXCAP_DEBUG
       LOGf("nesting depth = %d\n", stack.maxtop);
 #endif
   return ROSIE_OK;
