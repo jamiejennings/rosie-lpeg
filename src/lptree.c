@@ -16,6 +16,7 @@
 #include "lpcap.h"
 #include "lpcode.h"
 #include "lpprint.h"
+#include "lpsave.h"
 #include "lptree.h"
 
 #include "rpeg.h"
@@ -1189,6 +1190,51 @@ static int lp_printcode (lua_State *L) {
   return 0;
 }
 
+/* ----------------------------------------------------------------------------- */
+
+static int lp_savektable (lua_State *L) {
+  Pattern *p = getpattern(L, 1);
+  TTree *tree = p->tree;
+  lua_getuservalue(L, 1);  /* push 'ktable' (may be used by 'finalfix') */
+  finalfix(L, 0, NULL, tree);
+  saveKTable(L, 1);
+  return 0;
+}
+
+static int lp_savetree (lua_State *L) {
+  Pattern *p = getpattern(L, 1);
+  TTree *tree = p->tree;
+  lua_getuservalue(L, 1);  /* push 'ktable' (may be used by 'finalfix') */
+  finalfix(L, 0, NULL, tree);
+  lua_pop(L, 1);  /* remove 'ktable' */
+  saveTree(tree, 0);
+  return 0;
+}
+
+static int lp_savecode (lua_State *L) {
+  Pattern *p = getpattern(L, 1);
+  if (p->code == NULL)  /* not compiled yet? */
+    prepcompile(L, p, 1);
+  saveInstructions(p->code, p->codesize);
+  return 0;
+}
+
+static int lp_savepattern (lua_State *L) {
+  Pattern *p = getpattern(L, 1);
+  TTree *tree = p->tree;
+  lua_getuservalue(L, 1);  /* push 'ktable' (may be used by 'finalfix') */
+  finalfix(L, 0, NULL, tree);
+  saveKTable(L, 1);
+  lua_pop(L, 1);  /* remove 'ktable' */
+  saveTree(tree, 0);
+  if (p->code == NULL)		/* not compiled yet? */
+    prepcompile(L, p, 1);
+  saveInstructions(p->code, p->codesize);
+  return 0;
+}
+
+
+/* ----------------------------------------------------------------------------- */
 
 /*
 ** Get the initial position for the match, interpreting negative
@@ -1394,6 +1440,10 @@ static int lp_locale (lua_State *L) {
 
 
 static struct luaL_Reg pattreg[] = {
+  {"savektable", lp_savektable},
+  {"savecode", lp_savecode},
+  {"savetree", lp_savetree},
+  {"savepattern", lp_savepattern},
   {"ptree", lp_printtree},
   {"pcode", lp_printcode},
   {"match", lp_match},

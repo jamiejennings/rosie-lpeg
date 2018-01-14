@@ -18,10 +18,8 @@ endif
 LIBNAME = lpeg
 LUADIR = ../lua/
 
-LPEG_DEBUG=1
-
 COPT = -DLPEG_DEBUG -O2
-FILES = rcap.o rbuf.o lpvm.o lpcap.o lptree.o lpcode.o lpprint.o
+FILES = rcap.o rbuf.o lpvm.o lpcap.o lptree.o lpcode.o lpprint.o lpsave.o
 
 ifeq ($(PLATFORM), macosx)
 CC= cc
@@ -83,4 +81,5 @@ lpprint.o: lpprint.c lptypes.h lpprint.h lptree.h lpvm.h lpcap.h
 lptree.o: lptree.c lptypes.h lpcap.h lpcode.h lptree.h lpvm.h lpprint.h rpeg.h
 lpvm.o: lpvm.c lpcap.h lptypes.h lpvm.h lpprint.h lptree.h
 rbuf.o: rbuf.c rbuf.h
+lpsave.o: lpsave.c lptypes.h lpsave.h lptree.h lpvm.h lpcap.h
 

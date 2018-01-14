@@ -1,43 +1,34 @@
-/*
-** $Id: lpprint.c,v 1.9 2015/06/15 16:09:57 roberto Exp $
-** Copyright 2007, Lua.org & PUC-Rio  (see 'lpeg.html' for license)
-*/
+/*  -*- Mode: C/l; -*-                                                      */
+/*                                                                          */
+/*  lpsave.c                                                                */
+/*                                                                          */
+/*  © Copyright Jamie A. Jennings 2018.                                     */
+/*  LICENSE: MIT License (https://opensource.org/licenses/mit-license.html) */
+/*  AUTHOR: Jamie A. Jennings                                               */
 
-#include <ctype.h>
+
 #include <limits.h>
+#include <ctype.h>
 #include <stdio.h>
 
-
 #include "lptypes.h"
-#include "lpprint.h"
 #include "lpcode.h"
 
+#include "lpsave.h"
 
-#if defined(LPEG_DEBUG)
-
-/*
-** {======================================================
-** Printing patterns (for debugging)
-** =======================================================
-*/
-
-
-void printcharset (const byte *st) {
+void saveCharset(const byte *st) {
   int i;
-  printf("[");
   for (i = 0; i <= UCHAR_MAX; i++) {
     int first = i;
     while (testchar(st, i) && i <= UCHAR_MAX) i++;
     if (i - 1 == first)  /* unary range? */
-      printf("(%02x)", first);
+      printf("%02x ", first);
     else if (i - 1 > first)  /* non-empty range? */
-      printf("(%02x-%02x)", first, i - 1);
+      printf("(%02x %02x) ", first, i - 1);
   }
-  printf("]");
 }
 
-
-static void printcapkind (int kind) {
+static void saveCapKind(int kind) {
   const char *const modes[] = {
     "close", "position", "constant", "backref",
     "argument", "simple", "table", "function",
@@ -47,12 +38,12 @@ static void printcapkind (int kind) {
 }
 
 
-static void printjmp (const Instruction *op, const Instruction *p) {
+static void saveJMP(const Instruction *op, const Instruction *p) {
   printf("-> %d", (int)(p + (p + 1)->offset - op));
 }
 
 
-void printinst (const Instruction *op, const Instruction *p) {
+void saveInstruction(const Instruction *op, const Instruction *p) {
   const char *const names[] = {
     "any", "char", "set",
     "testany", "testchar", "testset",
@@ -69,29 +60,29 @@ void printinst (const Instruction *op, const Instruction *p) {
       break;
     }
     case ITestChar: {
-      printf("'%c'", p->i.aux); printjmp(op, p);
+      printf("'%c'", p->i.aux); saveJMP(op, p);
       break;
     }
     case IFullCapture: {
-      printcapkind(getkind(p));
+      saveCapKind(getkind(p));
       printf(" (size = %d)  (idx = %d)", getoff(p), p->i.key);
       break;
     }
     case IOpenCapture: {
-      printcapkind(getkind(p));
+      saveCapKind(getkind(p));
       printf(" (idx = %d)", p->i.key);
       break;
     }
     case ISet: {
-      printcharset((p+1)->buff);
+      saveCharset((p+1)->buff);
       break;
     }
     case ITestSet: {
-      printcharset((p+2)->buff); printjmp(op, p);
+      saveCharset((p+2)->buff); saveJMP(op, p);
       break;
     }
     case ISpan: {
-      printcharset((p+1)->buff);
+      saveCharset((p+1)->buff);
       break;
     }
     case IOpenCall: {
@@ -104,7 +95,7 @@ void printinst (const Instruction *op, const Instruction *p) {
     }
     case IJmp: case ICall: case ICommit: case IChoice:
     case IPartialCommit: case IBackCommit: case ITestAny: {
-      printjmp(op, p);
+      saveJMP(op, p);
       break;
     }
     default: break;
@@ -112,40 +103,13 @@ void printinst (const Instruction *op, const Instruction *p) {
   printf("\n");
 }
 
-
-void printpatt (Instruction *p, int n) {
+void saveInstructions(Instruction *p, int n) {
   Instruction *op = p;
   while (p < op + n) {
-    printinst(op, p);
+    saveInstruction(op, p);
     p += sizei(p);
   }
 }
-
-
-#if defined(LPEG_DEBUG)
-static void printcap (Capture *cap) {
-  printcapkind(cap->kind);
-  /* the cast below is to suppress warning */
-  printf(" (idx: %d - size: %d) -> %p\n", cap->idx, cap->siz, (const void *) cap->s);
-}
-
-
-void printcaplist (Capture *cap, Capture *limit) {
-  printf(">======\n");
-  for (; cap->s && (limit == NULL || cap < limit); cap++)
-    printcap(cap);
-  printf("=======\n");
-}
-#endif
-
-/* }====================================================== */
-
-
-/*
-** {======================================================
-** Printing trees (for debugging)
-** =======================================================
-*/
 
 static const char *tagnames[] = {
   "char", "set", "any",
@@ -159,89 +123,84 @@ static const char *tagnames[] = {
   "halt"
 };
 
-
-void printtree (TTree *tree, int ident) {
+void saveTree(TTree *tree) {
   int i;
-  for (i = 0; i < ident; i++) printf(" ");
-  printf("%s", tagnames[tree->tag]);
+  printf("(%s ", tagnames[tree->tag]);
   switch (tree->tag) {
     case TChar: {
       int c = tree->u.n;
       if (isprint(c))
-        printf(" '%c'\n", c);
+        printf("'%c')", c);
       else
-        printf(" (%02X)\n", c);
+        printf("%02X)", c);
       break;
     }
     case TSet: {
-      printcharset(treebuffer(tree));
-      printf("\n");
+      saveCharset(treebuffer(tree));
+      printf(")");
       break;
     }
     case TOpenCall: case TCall: {
-      printf(" key: %d\n", tree->key);
+      printf("key: %d)", tree->key);
       break;
     }
     case TBehind: {
-      printf(" %d\n", tree->u.n);
-        printtree(sib1(tree), ident + 2);
+      printf("%d ", tree->u.n);
+      saveTree(sib1(tree));
+      printf(")");
       break;
     }
     case TCapture: {
-      //      printf(" cap: %d  key: %d  n: %d\n", tree->cap, tree->key, tree->u.n);
-      printf(" kind: %d  key: %d\n", tree->cap, tree->key);
-      printtree(sib1(tree), ident + 2);
+      printf("kind: %d  key: %d ", tree->cap, tree->key);
+      saveTree(sib1(tree));
+      printf(")");
       break;
     }
     case TRule: {
-      printf(" n: %d  key: %d\n", tree->cap, tree->key);
-      printtree(sib1(tree), ident + 2);
+      printf("n: %d  key: %d ", tree->cap, tree->key);
+      saveTree(sib1(tree));
+      printf(")");
       break;  /* do not print next rule as a sibling */
     }
     case TGrammar: {
       TTree *rule = sib1(tree);
-      printf(" %d\n", tree->u.n);  /* number of rules */
+      printf("%d ", tree->u.n);  /* number of rules */
       for (i = 0; i < tree->u.n; i++) {
-        printtree(rule, ident + 2);
+        saveTree(rule);
         rule = sib2(rule);
       }
       assert(rule->tag == TTrue);  /* sentinel */
+      printf(")");
       break;
     }
     default: {
       int sibs = numsiblings[tree->tag];
-      printf("\n");
       if (sibs >= 1) {
-        printtree(sib1(tree), ident + 2);
+        saveTree(sib1(tree));
         if (sibs >= 2)
-          printtree(sib2(tree), ident + 2);
+          saveTree(sib2(tree));
       }
+      printf(")");
       break;
     }
   }
 }
 
-
-void printktable (lua_State *L, int idx) {
+void saveKTable(lua_State *L, int idx) {
   int n, i;
   lua_getuservalue(L, idx);
   if (lua_isnil(L, -1))  /* no ktable? */
     return;
   n = lua_rawlen(L, -1);
-  printf("[");
+  printf("(ktable ");
   for (i = 1; i <= n; i++) {
-    printf("%d = ", i);
     lua_rawgeti(L, -1, i);
     if (lua_isstring(L, -1))
-      printf("%s  ", lua_tostring(L, -1));
+      printf("%s ", lua_tostring(L, -1));
     else
-      printf("%s  ", lua_typename(L, lua_type(L, -1)));
+      printf("(error %s) ", lua_typename(L, lua_type(L, -1)));
     lua_pop(L, 1);
   }
-  printf("]\n");
-  /* leave ktable at the stack */
+  printf(")\n");
 }
 
-/* }====================================================== */
-
-#endif
