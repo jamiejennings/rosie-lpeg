@@ -1207,7 +1207,7 @@ static int lp_savetree (lua_State *L) {
   lua_getuservalue(L, 1);  /* push 'ktable' (may be used by 'finalfix') */
   finalfix(L, 0, NULL, tree);
   lua_pop(L, 1);  /* remove 'ktable' */
-  saveTree(tree, 0);
+  saveTree(tree);
   return 0;
 }
 
@@ -1226,7 +1226,7 @@ static int lp_savepattern (lua_State *L) {
   finalfix(L, 0, NULL, tree);
   saveKTable(L, 1);
   lua_pop(L, 1);  /* remove 'ktable' */
-  saveTree(tree, 0);
+  saveTree(tree);
   if (p->code == NULL)		/* not compiled yet? */
     prepcompile(L, p, 1);
   saveInstructions(p->code, p->codesize);
