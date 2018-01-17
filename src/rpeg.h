@@ -2,7 +2,7 @@
 /*                                                                           */
 /*  rpeg.h                                                                   */
 /*                                                                           */
-/*  © Copyright IBM Corporation 2017.                                        */
+/*  © Copyright IBM Corporation 2017, 2018.                                  */
 /*  LICENSE: MIT License (https://opensource.org/licenses/mit-license.html)  */
 /*  AUTHOR: Jamie A. Jennings                                                */
 
@@ -14,7 +14,7 @@
 #include "lualib.h"
 #include "rbuf.h"
 
-typedef uint8_t * byte_ptr;
+typedef unsigned char * byte_ptr;
 typedef struct rosie_string {
      uint32_t len;
      byte_ptr ptr;
