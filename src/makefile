@@ -52,7 +52,7 @@ CWARNS = -Wall -Wextra -pedantic \
         -Wno-missing-declarations \
 
 
-CFLAGS = $(CWARNS) $(COPT) -std=c99 -I$(LUADIR)/include -fPIC
+CFLAGS = -fvisibility=hidden $(CWARNS) $(COPT) -std=c99 -I$(LUADIR)/include -fPIC
 
 default: lpeg.so
 
