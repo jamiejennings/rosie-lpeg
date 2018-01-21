@@ -14,7 +14,8 @@
 #include "lualib.h"
 #include "rbuf.h"
 
-typedef unsigned char * byte_ptr;
+//typedef unsigned char * byte_ptr;
+#define byte_ptr unsigned char * 
 typedef struct rosie_string {
      uint32_t len;
      byte_ptr ptr;
