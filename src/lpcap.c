@@ -704,7 +704,7 @@ typedef struct stack_t {
 #endif
   const char *starts[R_MAXDEPTH+1];
   int counts[R_MAXDEPTH+1];
-};
+} stack_t;
 
 static void push(struct stack_t *s, const char *start, int count, lua_State *L) {
   s->top++;
