@@ -26,6 +26,9 @@ typedef struct r_encoder_type {
   int code;
 } r_encoder_t;
 
+/* Non-zero value => implemented in C
+ * Zero => implemented in Lua
+ */
 #define ENCODE_DEBUG -1
 #define ENCODE_JSON 1
 #define ENCODE_LINE 2

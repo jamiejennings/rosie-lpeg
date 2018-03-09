@@ -1280,7 +1280,7 @@ static int lp_match (lua_State *L) {
 
 /* required args: peg, input
  * optional args: start position, encoding type, total time accumulator, lpeg time accumulator
- * encoding types: debug (-1), byte array (0), json (1), input (2)
+ * encoding types: debug, byte array, json, input
  * RESTRICTION: only a limited set of capture types are supported
 */
 
@@ -1329,7 +1329,9 @@ static int do_r_match (lua_State *L, int from_lua) {
     return luaL_argerror(L, SUBJIDX, from_lua ? "not rbuffer or lua string" : "not rbuffer, rstr, or lua string");
   }
       
+  /* TODO: Return an error code for this situation: */
   if (l > INT_MAX) luaL_error(L, "input string too long");
+
   i = initposition(L, l, SUBJIDX+1);
   encoding = luaL_optinteger(L, SUBJIDX+2, ENCODE_BYTE);
   duration0 = luaL_optinteger(L, SUBJIDX+3, 0);	/* total time accumulator */
@@ -1342,7 +1344,7 @@ static int do_r_match (lua_State *L, int from_lua) {
   r = match(L, s, s + i, s + l, code, capture, ptop);
   tmatch = (lua_Integer) clock();
   if (r == NULL) {
-    lua_pushboolean(L, 0);	/* false, i.e. no match */
+    lua_pushinteger(L, 0);	/* zero ==> no match */
     lua_pushinteger(L, l);	/* leftover value is len */
     lua_pushboolean(L, 0);	/* dummy, so that there are always 5 return values */
     lua_pushinteger(L, (tmatch-t0)+duration0); /* total time (no capture processing) */
