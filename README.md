@@ -1,5 +1,7 @@
-# Custom version of lpeg for Rosie Pattern Language
+# We have moved!
 
-See [Rosie Pattern Language](https://github.com/jamiejennings/rosie-pattern-language).
+Rosie's new home for code and issues is on gitlab at
+[https://gitlab.com/rosie-pattern-language/rosie](https://gitlab.com/rosie-pattern-language/rosie).
 
-The original lpeg implementation is [here](http://www.inf.puc-rio.br/~roberto/lpeg).
+Rosie's home page remains at [http://rosie-lang.org](http://rosie-lang.org).
+
